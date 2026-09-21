@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Afiliados — GOAT Promo</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.webp?v=7" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=31">
+</head>
+<body class="gate">
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="side" aria-label="Menu principal">
+      <div class="side__brand">
+        <img class="side__logo" src="assets/logo.webp?v=9" alt="GOAT das Promoções" width="40" height="40">
+        <div class="side__name"><strong>GOAT<br>Promo</strong><span>PAINEL ADMIN</span></div>
+        <span class="online"><i></i>ONLINE</span>
+      </div>
+
+      <p class="side__label">GERENCIAMENTO</p>
+      <nav class="nav">
+        <a href="painel.html"><svg class="i"><use href="assets/icons.svg?v=31#i-grid"/></svg>Dashboard</a>
+        <a href="promocoes.html" data-nav="lista"><svg class="i"><use href="assets/icons.svg?v=31#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
+        <a href="promocao.html" data-nav="nova"><svg class="i"><use href="assets/icons.svg?v=31#i-plus-circle"/></svg>Nova Promoção</a>
+        <a href="afiliados.html" data-nav="afiliados" aria-current="page"><svg class="i"><use href="assets/icons.svg?v=31#i-network"/></svg>Afiliados</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=31#i-gear"/></svg>Configurações</a>
+      </nav>
+
+      <div class="sync">
+        <div class="sync__top">
+          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg?v=31#i-plane"/></svg></span>
+          <div><strong>TELEGRAM SYNC</strong><span>@goatdaspromocoes</span></div>
+          <i class="sync__dot"></i>
+        </div>
+        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg?v=31#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg?v=31#i-check-circle"/></svg></div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <!-- Topbar -->
+      <header class="top">
+        <nav class="crumbs" aria-label="Você está em">
+          <strong>Afiliados</strong>
+        </nav>
+
+        <label class="search">
+          <svg class="i"><use href="assets/icons.svg?v=31#i-search"/></svg>
+          <input id="search" type="search" placeholder="Buscar promoções, cupons ou SKU" autocomplete="off">
+        </label>
+
+        <div class="top__right">
+          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=31#i-plus"/></svg><span>Nova Promoção</span></a>
+          <button class="bell" type="button" aria-label="Notificações"><svg class="i"><use href="assets/icons.svg?v=31#i-bell"/></svg></button>
+          <div class="user">
+            <button class="user__btn" type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
+              <span class="avatar-u" id="user-initial">?</span>
+              <span><span class="user__name" id="user-name">…</span><span class="user__role">…</span></span>
+              <svg class="i"><use href="assets/icons.svg?v=31#i-down"/></svg>
+            </button>
+            <div class="menu" id="user-menu" hidden>
+              <p id="user-email"></p>
+              <button type="button" id="logout">Sair</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- Cabeçalho -->
+        <div class="head head--list">
+          <div>
+            <h1><span class="h1-ico"><svg class="i"><use href="assets/icons.svg?v=31#i-network"/></svg></span>Afiliados <span class="chip chip--count" id="total-chip">— lojas</span></h1>
+            <p class="sub">Configure as tags de rastreamento e o link de afiliado de cada loja parceira.</p>
+          </div>
+          <div class="actions">
+            <button class="btn btn--primary" type="button" id="connect-btn"><svg class="i"><use href="assets/icons.svg?v=31#i-plus"/></svg><span>Conectar nova loja</span></button>
+          </div>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="stats-row">
+          <div class="stat">
+            <div><span class="label">Lojas conectadas</span><strong id="st-connected">0</strong><small id="st-connected-sub">Com tag configurada</small></div>
+            <span class="stat__ico stat__ico--blue"><svg class="i"><use href="assets/icons.svg?v=31#i-store"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Cliques rastreados (mês)</span><strong id="st-clicks">0</strong><small>Registrados neste mês</small></div>
+            <span class="stat__ico stat__ico--red"><svg class="i"><use href="assets/icons.svg?v=31#i-pointer"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Comissão média</span><strong id="st-commission">—</strong><small>Média das lojas com comissão</small></div>
+            <span class="stat__ico stat__ico--green"><svg class="i"><use href="assets/icons.svg?v=31#i-coin"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Pendências</span><strong id="st-pending">0</strong><small id="st-pending-sub">Lojas ativas sem tag</small></div>
+            <span class="stat__ico stat__ico--gray"><svg class="i"><use href="assets/icons.svg?v=31#i-alert"/></svg></span>
+          </div>
+        </div>
+
+        <div class="af-grid">
+          <!-- Lojas parceiras -->
+          <section class="card af-stores">
+            <header class="card__head">
+              <div>
+                <h2 class="card__title">Lojas Parceiras &amp; Credenciais</h2>
+                <p class="af-sub" id="stores-sub">Carregando…</p>
+              </div>
+            </header>
+
+            <div class="table-wrap" id="stores-wrap">
+              <table class="table table--af">
+                <thead>
+                  <tr><th>Loja / Parceiro</th><th>Tag / ID de rastreamento</th><th>Estrutura &amp; Comissão</th><th>Status</th><th class="ctr">Ações</th></tr>
+                </thead>
+                <tbody id="store-rows"></tbody>
+              </table>
+            </div>
+
+            <div class="empty" id="stores-empty" hidden>
+              <svg class="i"><use href="assets/icons.svg?v=31#i-inbox"/></svg>
+              <h2>Nenhuma loja cadastrada</h2>
+              <p>Conecte a primeira loja para configurar a tag de afiliado dela.</p>
+            </div>
+          </section>
+
+          <div class="af-side">
+            <!-- Cadastrar / atualizar -->
+            <section class="card" id="form-card">
+              <header class="card__head">
+                <h2 class="card__title"><svg class="i"><use href="assets/icons.svg?v=31#i-sliders"/></svg>Cadastrar / Atualizar Afiliado</h2>
+                <span class="chip chip--store" id="role-chip" hidden>Somente leitura</span>
+              </header>
+              <form class="card__body" id="af-form" novalidate>
+                <fieldset id="af-fields" class="af-fields">
+                  <div class="f">
+                    <label for="a-store">Plataforma / loja parceira</label>
+                    <div class="af-storepick">
+                      <span class="af-logo" id="a-logo"></span>
+                      <select class="f-input" id="a-store"></select>
+                    </div>
+                  </div>
+
+                  <div id="a-new" hidden>
+                    <div class="f">
+                      <label for="a-name">Nome da loja <em>*</em></label>
+                      <input class="f-input" id="a-name" type="text" maxlength="60" placeholder="Ex.: Americanas" autocomplete="off">
+                      <small class="f-err" data-for="name"></small>
+                    </div>
+                    <div class="f">
+                      <label for="a-color">Cor da marca</label>
+                      <input class="f-color" id="a-color" type="color" value="#6b7083">
+                    </div>
+                  </div>
+
+                  <div class="f">
+                    <label for="a-tag">ID / tag de afiliado da loja <em>*</em></label>
+                    <div class="money"><span>#</span><input class="f-input mono" id="a-tag" type="text" maxlength="120" placeholder="minhatag-20" autocomplete="off"></div>
+                    <small class="f-err" data-for="tag"></small>
+                  </div>
+
+                  <div class="af-pair">
+                    <div class="f">
+                      <label for="a-commission">Comissão (%)</label>
+                      <input class="f-input" id="a-commission" type="text" inputmode="decimal" placeholder="Ex.: 7,5" autocomplete="off">
+                      <small class="f-err" data-for="commission"></small>
+                    </div>
+                    <div class="f">
+                      <label for="a-program">Nome do programa</label>
+                      <input class="f-input" id="a-program" type="text" maxlength="80" placeholder="Ex.: Associados Amazon BR" autocomplete="off">
+                      <small class="f-err" data-for="program"></small>
+                    </div>
+                  </div>
+
+                  <div class="f">
+                    <label for="a-template">Estrutura da URL do link de afiliado</label>
+                    <input class="f-input mono" id="a-template" type="text" maxlength="500" placeholder="https://www.loja.com.br/dp/{SKU}?tag={TAG}" autocomplete="off" spellcheck="false">
+                    <small class="f-hint">Variáveis aceitas:
+                      <button class="var" type="button" data-var="{SKU}">{SKU}</button>
+                      <button class="var" type="button" data-var="{TAG}">{TAG}</button>
+                      <button class="var" type="button" data-var="{ORIGIN_URL}">{ORIGIN_URL}</button>
+                    </small>
+                    <small class="f-err" data-for="template"></small>
+                  </div>
+
+                  <label class="check-row"><input type="checkbox" id="a-active" checked> Loja ativa (aparece na escolha de loja das promoções)</label>
+                </fieldset>
+
+                <p class="af-note" id="af-note" hidden>Somente administradores podem alterar lojas e afiliados.</p>
+
+                <div class="af-actions">
+                  <button class="btn" type="button" id="a-reset">Restaurar padrão</button>
+                  <button class="btn btn--primary" type="submit" id="a-save"><span>Salvar configuração</span></button>
+                </div>
+              </form>
+            </section>
+
+            <!-- Gerador de link -->
+            <section class="card" id="gen-card">
+              <header class="card__head">
+                <div>
+                  <h2 class="card__title"><svg class="i"><use href="assets/icons.svg?v=31#i-bolt"/></svg>Gerador de Link de Teste</h2>
+                  <p class="af-sub">Cole a URL de um produto e veja o link de afiliado com a sua tag.</p>
+                </div>
+              </header>
+              <form class="card__body" id="gen-form" novalidate>
+                <div class="f">
+                  <label for="g-store">Loja</label>
+                  <select class="f-input" id="g-store"></select>
+                </div>
+                <div class="f">
+                  <label for="g-url">URL do produto</label>
+                  <div class="af-gen">
+                    <input class="f-input" id="g-url" type="url" placeholder="https://www.amazon.com.br/produto/dp/B0..." autocomplete="off">
+                    <button class="btn btn--dark" type="submit">Gerar link</button>
+                  </div>
+                  <small class="f-err" data-for="gen"></small>
+                </div>
+
+                <div class="af-out" id="g-out" hidden>
+                  <div class="af-out__head"><span class="label">Link de afiliado</span><span class="af-out__tag">Tag: <b class="mono" id="g-tag"></b></span></div>
+                  <div class="af-out__row">
+                    <input class="f-input f-input--plain mono" id="g-link" type="text" readonly aria-label="Link de afiliado gerado">
+                    <button class="btn btn--primary btn--sm" type="button" id="g-copy"><svg class="i"><use href="assets/icons.svg?v=31#i-copy"/></svg>Copiar</button>
+                  </div>
+                  <div class="af-out__foot"><span id="g-sku"></span><a id="g-open" href="#" target="_blank" rel="noopener noreferrer">Abrir no navegador <svg class="i"><use href="assets/icons.svg?v=31#i-ext"/></svg></a></div>
+                </div>
+              </form>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="config.js?v=31"></script>
+  <script src="auth.js?v=31"></script>
+  <script src="shell.js?v=31"></script>
+  <script src="notify.js?v=31"></script>
+  <script src="afiliados.js?v=31"></script>
+</body>
+</html>

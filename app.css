@@ -906,3 +906,56 @@ textarea.f-input { height: auto; padding: 10px 12px; resize: vertical; line-heig
 
 /* Botão "Limpar" do histórico de notificações: apaga tudo, então avisa com o vermelho ao passar o mouse */
 .btn--wipe:hover:not(:disabled) { border-color: transparent; background: #fdeaec; color: var(--red-dark); }
+
+/* ================= Central de Afiliados ================= */
+.af-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; margin-top: 16px; align-items: start; }
+.af-side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.af-sub { margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 500; }
+
+.table--af .ctr { text-align: center; }
+.af-store { display: flex; align-items: center; gap: 12px; min-width: 190px; }
+.af-store strong { display: block; font-weight: 700; }
+.af-store small { display: block; margin-top: 1px; color: var(--muted); font-size: 11px; }
+.af-logo { display: inline-grid; place-items: center; flex: none; width: 36px; height: 36px; overflow: hidden; border: 1px solid var(--line); border-radius: 50%; color: #fff; font-size: 14px; font-weight: 800; }
+.af-logo img { width: 100%; height: 100%; padding: 5px; object-fit: contain; }
+.tag-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 4px 3px 9px; border-radius: 6px; background: #eef1fc; color: #3d4358; font-size: 11.5px; }
+.tag-chip .act { width: 24px; height: 24px; }
+.tag-chip .act .i { width: 13px; height: 13px; }
+.muted { color: var(--faint); font-size: 12px; }
+.af-kind small { display: block; margin-top: 2px; color: var(--green); font-size: 11px; font-weight: 600; }
+.af-kind .mono, .af-kind .muted { font-size: 12px; }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.pill::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.pill--on { background: var(--green-bg); color: #137a3b; }
+.pill--off { background: #ececf1; color: #6b7083; }
+.pill--warn { background: #fff2d6; color: #8a5a00; }
+
+.af-fields { min-width: 0; margin: 0; padding: 0; border: 0; }
+.af-fields[disabled] { opacity: .6; }
+.af-fields > * + * { margin-top: 14px; }
+.af-storepick { display: flex; align-items: center; gap: 10px; }
+.af-storepick .af-logo { width: 44px; height: 44px; }
+.af-storepick .f-input { flex: 1; min-width: 0; }
+.af-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.f-color { width: 56px; height: 36px; padding: 2px; border: 1px solid var(--line); border-radius: 8px; background: #fff; cursor: pointer; }
+.var { padding: 2px 7px; border: 0; border-radius: 5px; background: #eef1fc; color: #3d4358; font: 600 11px ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; cursor: pointer; }
+.var:hover:not(:disabled) { background: #dfe3f4; }
+.af-note { margin-top: 12px; padding: 10px 12px; border-radius: 8px; background: #fff6e5; color: #7a4b00; font-size: 12px; }
+.af-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 16px; }
+
+.af-gen { display: flex; gap: 8px; }
+.af-gen .f-input { flex: 1; min-width: 0; }
+.btn--dark { border-color: transparent; background: #2a2f3d; color: #fff; }
+.btn--dark:hover { background: #3a4052; }
+.btn--sm { height: 30px; padding: 0 10px; font-size: 12px; }
+.af-out { margin-top: 14px; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--soft); }
+.af-out__head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.af-out__tag { color: var(--muted); font-size: 11px; }
+.af-out__row { display: flex; align-items: center; gap: 8px; margin-top: 8px; padding: 6px 6px 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.af-out__row .f-input { flex: 1; min-width: 0; font-size: 11.5px; }
+.af-out__foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; color: var(--muted); font-size: 11.5px; }
+.af-out__foot a { display: inline-flex; align-items: center; gap: 4px; color: var(--red-dark); font-weight: 700; }
+.af-out__foot .i { width: 12px; height: 12px; }
+
+@media (max-width: 1180px) { .af-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 560px) { .af-pair { grid-template-columns: minmax(0, 1fr); } .af-gen { flex-direction: column; } }
