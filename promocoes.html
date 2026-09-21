@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.css?v=13">
+  <link rel="stylesheet" href="app.css?v=17">
 </head>
 <body class="gate">
   <div class="app">
@@ -78,13 +78,6 @@
             <h1>Promoções</h1>
           </div>
           <div class="actions">
-            <a class="btn btn--primary" href="promocao.html"><svg class="i"><use href="assets/icons.svg#i-plus"/></svg><span>Nova Promoção</span></a>
-          </div>
-        </div>
-
-        <section class="card list">
-          <div class="list__tools">
-            <span class="list__count" id="list-count">Carregando…</span>
             <select class="f-input f-input--sm" id="filter-status" aria-label="Filtrar por situação">
               <option value="">Todas as situações</option>
               <option value="draft">Rascunho</option>
@@ -95,11 +88,22 @@
               <option value="failed">Falhou</option>
             </select>
           </div>
+        </div>
+
+        <section class="card list">
+          <div class="list__tools">
+            <span class="list__count" id="list-count">Carregando…</span>
+            <div class="bulk" id="bulk" hidden>
+              <strong id="bulk-count"></strong>
+              <button class="btn btn--del" type="button" id="bulk-delete"><svg class="i"><use href="assets/icons.svg#i-trash"/></svg><span>Excluir</span></button>
+              <button class="link-btn" type="button" id="bulk-clear">Limpar seleção</button>
+            </div>
+          </div>
 
           <div class="table-wrap">
             <table class="table">
               <thead>
-                <tr><th>Promoção</th><th>Loja</th><th class="num">Preço</th><th class="num">Desconto</th><th>Situação</th><th>Criada em</th></tr>
+                <tr><th class="sel"><input type="checkbox" id="select-all" aria-label="Selecionar todas as promoções"></th><th>Promoção</th><th>Loja</th><th class="num">Preço</th><th class="num">Desconto</th><th>Situação</th><th>Criada em</th></tr>
               </thead>
               <tbody id="rows"></tbody>
             </table>
@@ -119,9 +123,9 @@
   <p class="toast" id="toast" role="status" hidden></p>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="config.js?v=13"></script>
-  <script src="auth.js?v=13"></script>
-  <script src="shell.js?v=13"></script>
-  <script src="promocoes.js?v=13"></script>
+  <script src="config.js?v=17"></script>
+  <script src="auth.js?v=17"></script>
+  <script src="shell.js?v=17"></script>
+  <script src="promocoes.js?v=17"></script>
 </body>
 </html>

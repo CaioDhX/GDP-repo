@@ -559,3 +559,14 @@ textarea.f-input { height: auto; padding: 10px 12px; resize: vertical; line-heig
   .money-row { grid-template-columns: minmax(0, 1fr); }
   .actions { flex-wrap: wrap; }
 }
+
+/* Lista: seleção e exclusão em lote */
+.table th.sel, .table td.sel { width: 44px; padding-right: 0; }
+.table .sel input { width: 16px; height: 16px; margin: 0; accent-color: var(--red); cursor: pointer; vertical-align: middle; }
+.row-sel { background: #fff6f7; }
+.bulk { display: flex; align-items: center; gap: 12px; }
+.bulk strong { font-size: 13px; font-weight: 800; }
+.bulk .link-btn { margin-top: 0; }
+.btn--del { height: 32px; border-color: transparent; background: #fdeaec; color: var(--red-dark); }
+.btn--del:hover { background: #fbd6da; }
+.head .actions .f-input--sm { height: 38px; min-width: 190px; }

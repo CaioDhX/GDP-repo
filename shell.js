@@ -45,14 +45,15 @@
   });
 
   // Contador do menu: total real de promoções.
-  ready.then(function () {
+  function refreshCount() {
     var badge = document.getElementById("nav-count");
     if (!badge) return;
     client.from("deals").select("id", { count: "exact", head: true }).then(function (res) {
-      if (typeof res.count === "number") badge.textContent = String(res.count);
+      if (typeof res.count === "number") { badge.textContent = String(res.count); badge.hidden = false; }
       else badge.hidden = true;
     });
-  });
+  }
+  ready.then(refreshCount);
 
   // ---------- Menu do usuário ----------
   var btn = document.getElementById("user-btn");
@@ -98,5 +99,5 @@
     });
   });
 
-  window.GDP_SHELL = { client: client, ready: ready, profile: profile, toast: toast };
+  window.GDP_SHELL = { client: client, ready: ready, profile: profile, toast: toast, refreshCount: refreshCount };
 })();
