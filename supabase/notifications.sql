@@ -118,6 +118,8 @@ create or replace function public.notifications_prune()
 returns void language sql security definer set search_path = public as $$
   delete from public.notifications where created_at < now() - interval '90 days';
 $$;
+-- Não exponha a limpeza pela API pública (só o dono do banco / pg_cron executa).
+revoke execute on function public.notifications_prune() from public, anon, authenticated;
 
 -- ---------------------------------------------------------------------------
 -- Eventos automáticos a partir de public.deals
