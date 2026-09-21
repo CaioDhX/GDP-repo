@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.css?v=28">
+  <link rel="stylesheet" href="app.css?v=29">
 </head>
 <body class="gate">
   <div class="app">
@@ -23,20 +23,20 @@
 
       <p class="side__label">GERENCIAMENTO</p>
       <nav class="nav">
-        <a href="painel.html"><svg class="i"><use href="assets/icons.svg?v=28#i-grid"/></svg>Dashboard</a>
-        <a href="promocoes.html" data-nav="lista" aria-current="page"><svg class="i"><use href="assets/icons.svg?v=28#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
-        <a href="promocao.html" data-nav="nova"><svg class="i"><use href="assets/icons.svg?v=28#i-plus-circle"/></svg>Nova Promoção</a>
-        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=28#i-network"/></svg>Afiliados</a>
-        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=28#i-gear"/></svg>Configurações</a>
+        <a href="painel.html"><svg class="i"><use href="assets/icons.svg?v=29#i-grid"/></svg>Dashboard</a>
+        <a href="promocoes.html" data-nav="lista" aria-current="page"><svg class="i"><use href="assets/icons.svg?v=29#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
+        <a href="promocao.html" data-nav="nova"><svg class="i"><use href="assets/icons.svg?v=29#i-plus-circle"/></svg>Nova Promoção</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=29#i-network"/></svg>Afiliados</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=29#i-gear"/></svg>Configurações</a>
       </nav>
 
       <div class="sync">
         <div class="sync__top">
-          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg?v=28#i-plane"/></svg></span>
+          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg?v=29#i-plane"/></svg></span>
           <div><strong>TELEGRAM SYNC</strong><span>@goatdaspromocoes</span></div>
           <i class="sync__dot"></i>
         </div>
-        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg?v=28#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg?v=28#i-check-circle"/></svg></div>
+        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg?v=29#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg?v=29#i-check-circle"/></svg></div>
       </div>
     </aside>
 
@@ -48,18 +48,18 @@
         </nav>
 
         <label class="search">
-          <svg class="i"><use href="assets/icons.svg?v=28#i-search"/></svg>
+          <svg class="i"><use href="assets/icons.svg?v=29#i-search"/></svg>
           <input id="search" type="search" placeholder="Buscar promoções, cupons ou SKU" autocomplete="off">
         </label>
 
         <div class="top__right">
-          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=28#i-plus"/></svg><span>Nova Promoção</span></a>
-          <button class="bell" type="button" aria-label="Notificações"><svg class="i"><use href="assets/icons.svg?v=28#i-bell"/></svg></button>
+          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=29#i-plus"/></svg><span>Nova Promoção</span></a>
+          <button class="bell" type="button" aria-label="Notificações"><svg class="i"><use href="assets/icons.svg?v=29#i-bell"/></svg></button>
           <div class="user">
             <button class="user__btn" type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
               <span class="avatar-u" id="user-initial">?</span>
               <span><span class="user__name" id="user-name">…</span><span class="user__role">…</span></span>
-              <svg class="i"><use href="assets/icons.svg?v=28#i-down"/></svg>
+              <svg class="i"><use href="assets/icons.svg?v=29#i-down"/></svg>
             </button>
             <div class="menu" id="user-menu" hidden>
               <p id="user-email"></p>
@@ -73,12 +73,12 @@
         <!-- Cabeçalho -->
         <div class="head head--list">
           <div>
-            <h1><span class="h1-ico"><svg class="i"><use href="assets/icons.svg?v=28#i-tag"/></svg></span>Promoções <span class="chip chip--count" id="total-chip">— itens</span></h1>
+            <h1><span class="h1-ico"><svg class="i"><use href="assets/icons.svg?v=29#i-tag"/></svg></span>Promoções <span class="chip chip--count" id="total-chip">— itens</span></h1>
             <p class="sub">Gerencie as ofertas cadastradas no GOAT das Promoções em tempo real.</p>
           </div>
           <div class="actions">
-            <button class="btn" type="button" id="export-btn"><svg class="i"><use href="assets/icons.svg?v=28#i-download"/></svg>Exportar</button>
-            <button class="btn" type="button" data-demo><svg class="i"><use href="assets/icons.svg?v=28#i-sync"/></svg>Sincronizar Feed</button>
+            <button class="btn" type="button" id="export-btn"><svg class="i"><use href="assets/icons.svg?v=29#i-download"/></svg>Exportar</button>
+            <button class="btn" type="button" data-demo><svg class="i"><use href="assets/icons.svg?v=29#i-sync"/></svg>Sincronizar Feed</button>
           </div>
         </div>
 
@@ -86,19 +86,19 @@
         <div class="stats-row">
           <div class="stat">
             <div><span class="label">Ativas agora</span><strong id="st-active">0</strong><small>Publicadas e dentro da validade</small></div>
-            <span class="stat__ico stat__ico--green"><svg class="i"><use href="assets/icons.svg?v=28#i-megaphone"/></svg></span>
+            <span class="stat__ico stat__ico--green"><svg class="i"><use href="assets/icons.svg?v=29#i-megaphone"/></svg></span>
           </div>
           <div class="stat">
             <div><span class="label">Prontas p/ disparo</span><strong id="st-ready">0</strong><small>Fila do bot</small></div>
-            <span class="stat__ico stat__ico--blue"><svg class="i"><use href="assets/icons.svg?v=28#i-bolt"/></svg></span>
+            <span class="stat__ico stat__ico--blue"><svg class="i"><use href="assets/icons.svg?v=29#i-bolt"/></svg></span>
           </div>
           <div class="stat">
             <div><span class="label">Rascunhos</span><strong id="st-draft">0</strong><small>Aguardando finalização</small></div>
-            <span class="stat__ico stat__ico--gray"><svg class="i"><use href="assets/icons.svg?v=28#i-pencil"/></svg></span>
+            <span class="stat__ico stat__ico--gray"><svg class="i"><use href="assets/icons.svg?v=29#i-pencil"/></svg></span>
           </div>
           <div class="stat">
             <div><span class="label">Cliques hoje</span><strong id="st-clicks">0</strong><small>Desde as 00:00</small></div>
-            <span class="stat__ico stat__ico--red"><svg class="i"><use href="assets/icons.svg?v=28#i-flame"/></svg></span>
+            <span class="stat__ico stat__ico--red"><svg class="i"><use href="assets/icons.svg?v=29#i-flame"/></svg></span>
           </div>
         </div>
 
@@ -106,7 +106,7 @@
         <section class="card filters" aria-label="Filtros">
           <div class="filters__row">
             <label class="fsearch">
-              <svg class="i"><use href="assets/icons.svg?v=28#i-search"/></svg>
+              <svg class="i"><use href="assets/icons.svg?v=29#i-search"/></svg>
               <input id="q" type="search" placeholder="Buscar produto por nome, ID ou palavra-chave..." autocomplete="off">
             </label>
             <select class="f-input f-input--md" id="f-store" aria-label="Loja"><option value="">Todas as lojas</option></select>
@@ -125,7 +125,7 @@
               <option value="7d">Últimos 7 dias</option>
               <option value="30d">Últimos 30 dias</option>
             </select>
-            <button class="btn btn--md" type="button" id="f-clear"><svg class="i"><use href="assets/icons.svg?v=28#i-x"/></svg>Limpar</button>
+            <button class="btn btn--md" type="button" id="f-clear"><svg class="i"><use href="assets/icons.svg?v=29#i-x"/></svg>Limpar</button>
           </div>
           <div class="filters__meta">
             <div class="chips" id="chips"></div>
@@ -163,17 +163,17 @@
           </div>
 
           <div class="empty" id="empty" hidden>
-            <svg class="i"><use href="assets/icons.svg?v=28#i-inbox"/></svg>
+            <svg class="i"><use href="assets/icons.svg?v=29#i-inbox"/></svg>
             <h2 id="empty-title">Nenhuma promoção cadastrada</h2>
             <p id="empty-text">Cadastre a primeira para ela aparecer aqui.</p>
-            <a class="btn btn--primary" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=28#i-plus"/></svg><span>Nova Promoção</span></a>
+            <a class="btn btn--primary" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=29#i-plus"/></svg><span>Nova Promoção</span></a>
           </div>
 
           <div class="list__foot">
             <div class="bulk" id="bulk" hidden>
               <strong id="bulk-count"></strong>
-              <button class="btn btn--ok" type="button" id="bulk-ready"><svg class="i"><use href="assets/icons.svg?v=28#i-check-circle"/></svg><span>Marcar como Pronta</span></button>
-              <button class="btn btn--del" type="button" id="bulk-delete"><svg class="i"><use href="assets/icons.svg?v=28#i-trash"/></svg><span>Excluir</span></button>
+              <button class="btn btn--ok" type="button" id="bulk-ready"><svg class="i"><use href="assets/icons.svg?v=29#i-check-circle"/></svg><span>Marcar como Pronta</span></button>
+              <button class="btn btn--del" type="button" id="bulk-delete"><svg class="i"><use href="assets/icons.svg?v=29#i-trash"/></svg><span>Excluir</span></button>
               <button class="link-btn" type="button" id="bulk-clear">Limpar seleção</button>
             </div>
             <div class="pager">
@@ -187,10 +187,10 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="config.js?v=28"></script>
-  <script src="auth.js?v=28"></script>
-  <script src="shell.js?v=28"></script>
-  <script src="notify.js?v=28"></script>
-  <script src="promocoes.js?v=28"></script>
+  <script src="config.js?v=29"></script>
+  <script src="auth.js?v=29"></script>
+  <script src="shell.js?v=29"></script>
+  <script src="notify.js?v=29"></script>
+  <script src="promocoes.js?v=29"></script>
 </body>
 </html>
