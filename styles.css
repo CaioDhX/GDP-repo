@@ -248,7 +248,26 @@ label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
   color: #7a4b00;
   font-size: 12px;
 }
+.form-note--error { background: #fdecee; color: #a3121f; }
+.form-note--info { background: var(--tip-bg); color: #3b4160; }
 .form-note[hidden] { display: none; }
+
+.btn-login:disabled { opacity: .65; cursor: progress; box-shadow: none; }
+
+/* ---------- Página simples (painel) ---------- */
+.solo {
+  width: 100%;
+  max-width: 480px;
+  padding: 40px 32px;
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 0 24px 60px -20px rgba(28, 33, 60, .28), 0 2px 8px rgba(28, 33, 60, .06);
+}
+.solo[hidden] { display: none; }
+.solo__logo { width: 132px; height: auto; margin: -10px 0 4px -10px; mix-blend-mode: multiply; }
+.solo .lead + .lead { margin-top: 10px; }
+.solo .lead strong { color: var(--ink); }
+.solo__out { margin-top: 28px; }
 
 .login__foot {
   display: flex;
