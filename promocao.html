@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.css?v=22">
+  <link rel="stylesheet" href="app.css?v=23">
 </head>
 <body class="gate">
   <div class="app">
@@ -23,20 +23,20 @@
 
       <p class="side__label">GERENCIAMENTO</p>
       <nav class="nav">
-        <a href="painel.html"><svg class="i"><use href="assets/icons.svg?v=22#i-grid"/></svg>Dashboard</a>
-        <a href="promocoes.html" data-nav="lista"><svg class="i"><use href="assets/icons.svg?v=22#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
-        <a href="promocao.html" data-nav="nova" aria-current="page"><svg class="i"><use href="assets/icons.svg?v=22#i-plus-circle"/></svg>Nova Promoção<span class="nav__cta">Criar</span></a>
-        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=22#i-network"/></svg>Afiliados</a>
-        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=22#i-gear"/></svg>Configurações</a>
+        <a href="painel.html"><svg class="i"><use href="assets/icons.svg?v=23#i-grid"/></svg>Dashboard</a>
+        <a href="promocoes.html" data-nav="lista"><svg class="i"><use href="assets/icons.svg?v=23#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
+        <a href="promocao.html" data-nav="nova" aria-current="page"><svg class="i"><use href="assets/icons.svg?v=23#i-plus-circle"/></svg>Nova Promoção</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=23#i-network"/></svg>Afiliados</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=23#i-gear"/></svg>Configurações</a>
       </nav>
 
       <div class="sync">
         <div class="sync__top">
-          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg?v=22#i-plane"/></svg></span>
+          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg?v=23#i-plane"/></svg></span>
           <div><strong>TELEGRAM SYNC</strong><span>@goatdaspromocoes</span></div>
           <i class="sync__dot"></i>
         </div>
-        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg?v=22#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg?v=22#i-check-circle"/></svg></div>
+        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg?v=23#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg?v=23#i-check-circle"/></svg></div>
       </div>
     </aside>
 
@@ -44,23 +44,22 @@
       <!-- Topbar -->
       <header class="top">
         <nav class="crumbs" aria-label="Você está em">
-          <a href="promocoes.html">Promoções</a><svg class="i"><use href="assets/icons.svg?v=22#i-right"/></svg>
           <strong id="crumb-current">Nova promoção</strong>
         </nav>
 
         <label class="search">
-          <svg class="i"><use href="assets/icons.svg?v=22#i-search"/></svg>
+          <svg class="i"><use href="assets/icons.svg?v=23#i-search"/></svg>
           <input id="search" type="search" placeholder="Buscar promoções, cupons ou SKU" autocomplete="off">
         </label>
 
         <div class="top__right">
-          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=22#i-plus"/></svg><span>Nova Promoção</span></a>
-          <button class="bell" type="button" aria-label="Notificações" data-demo><svg class="i"><use href="assets/icons.svg?v=22#i-bell"/></svg></button>
+          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=23#i-plus"/></svg><span>Nova Promoção</span></a>
+          <button class="bell" type="button" aria-label="Notificações" data-demo><svg class="i"><use href="assets/icons.svg?v=23#i-bell"/></svg></button>
           <div class="user">
             <button class="user__btn" type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
               <span class="avatar-u" id="user-initial">?</span>
               <span><span class="user__name" id="user-name">…</span><span class="user__role">…</span></span>
-              <svg class="i"><use href="assets/icons.svg?v=22#i-down"/></svg>
+              <svg class="i"><use href="assets/icons.svg?v=23#i-down"/></svg>
             </button>
             <div class="menu" id="user-menu" hidden>
               <p id="user-email"></p>
@@ -72,7 +71,7 @@
 
       <main class="content">
         <div class="empty" id="not-found" hidden>
-          <svg class="i"><use href="assets/icons.svg?v=22#i-inbox"/></svg>
+          <svg class="i"><use href="assets/icons.svg?v=23#i-inbox"/></svg>
           <h2>Promoção não encontrada</h2>
           <p>Ela pode ter sido excluída ou o link está incorreto.</p>
           <a class="btn" href="promocoes.html">Ver todas as promoções</a>
@@ -85,8 +84,8 @@
             </div>
             <div class="actions">
               <a class="btn" href="promocoes.html">Cancelar</a>
-              <button class="btn btn--danger" type="button" id="delete-btn" hidden aria-label="Excluir promoção" title="Excluir promoção"><svg class="i"><use href="assets/icons.svg?v=22#i-trash"/></svg></button>
-              <button class="btn btn--primary" type="submit" id="save-btn"><svg class="i"><use href="assets/icons.svg?v=22#i-save"/></svg><span>Salvar promoção</span></button>
+              <button class="btn btn--danger" type="button" id="delete-btn" hidden aria-label="Excluir promoção" title="Excluir promoção"><svg class="i"><use href="assets/icons.svg?v=23#i-trash"/></svg></button>
+              <button class="btn btn--primary" type="submit" id="save-btn"><svg class="i"><use href="assets/icons.svg?v=23#i-save"/></svg><span>Salvar promoção</span></button>
             </div>
           </div>
 
@@ -94,7 +93,7 @@
             <div class="col">
               <section class="card">
                 <header class="card__head">
-                  <h2 class="card__title"><svg class="i"><use href="assets/icons.svg?v=22#i-doc"/></svg>Ficha Técnica &amp; Comercial</h2>
+                  <h2 class="card__title"><svg class="i"><use href="assets/icons.svg?v=23#i-doc"/></svg>Ficha Técnica &amp; Comercial</h2>
                   <span class="sysid">ID Sistema: <b class="mono" id="sys-id">gerado ao salvar</b></span>
                 </header>
                 <div class="card__body">
@@ -108,7 +107,7 @@
                     <div>
                       <label class="photo photo--input" for="f-image" id="photo-box">
                         <img id="photo-img" alt="Foto do produto" hidden>
-                        <span class="photo__empty" id="photo-empty"><svg class="i"><use href="assets/icons.svg?v=22#i-image"/></svg>Adicionar foto<small>JPG, PNG ou WebP · até 5 MB</small></span>
+                        <span class="photo__empty" id="photo-empty"><svg class="i"><use href="assets/icons.svg?v=23#i-image"/></svg>Adicionar foto<small>JPG, PNG ou WebP · até 5 MB</small></span>
                         <span class="off" id="photo-off" hidden></span>
                       </label>
                       <input id="f-image" name="image" type="file" accept="image/jpeg,image/png,image/webp" hidden>
@@ -131,11 +130,11 @@
                         </div>
                       </div>
                       <div class="pills" id="calc-pills" hidden>
-                        <span class="save" id="calc-save"><svg class="i"><use href="assets/icons.svg?v=22#i-coin"/></svg><span></span></span>
+                        <span class="save" id="calc-save"><svg class="i"><use href="assets/icons.svg?v=23#i-coin"/></svg><span></span></span>
                       </div>
 
                       <div class="coupon">
-                        <svg class="i"><use href="assets/icons.svg?v=22#i-ticket"/></svg>
+                        <svg class="i"><use href="assets/icons.svg?v=23#i-ticket"/></svg>
                         <div class="coupon__field">
                           <label for="f-coupon">Cupom aplicável</label>
                           <input class="f-input f-input--plain" id="f-coupon" name="coupon_code" type="text" maxlength="40" placeholder="GOAT100" autocomplete="off">
@@ -165,7 +164,7 @@
                     <label class="label" for="f-affiliate">Link de afiliado com rastreamento <em>*</em></label>
                     <div class="aff__row">
                       <input class="f-input f-input--plain mono" id="f-affiliate" name="affiliate_url" type="url" placeholder="https://loja.com.br/produto?tag=goatpromo" autocomplete="off">
-                      <a class="btn" id="test-link" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="assets/icons.svg?v=22#i-ext"/></svg>Testar Link</a>
+                      <a class="btn" id="test-link" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="assets/icons.svg?v=23#i-ext"/></svg>Testar Link</a>
                     </div>
                     <small class="f-err" data-for="affiliate_url"></small>
                   </div>
@@ -228,21 +227,21 @@
             <div class="col">
               <section class="card">
                 <header class="card__head">
-                  <h2 class="card__title"><svg class="i i--fill i--tg"><use href="assets/icons.svg?v=22#i-plane"/></svg>Simulação Oficial Telegram</h2>
+                  <h2 class="card__title"><svg class="i i--fill i--tg"><use href="assets/icons.svg?v=23#i-plane"/></svg>Simulação Oficial Telegram</h2>
                 </header>
                 <div class="tg" style="margin-top:14px">
                   <div class="tg__bar">
-                    <svg class="i"><use href="assets/icons.svg?v=22#i-back"/></svg>
+                    <svg class="i"><use href="assets/icons.svg?v=23#i-back"/></svg>
                     <img src="assets/logo.webp?v=9" alt="" width="34" height="34">
                     <div><strong>GOAT das Promoções</strong><small>canal</small></div>
-                    <div class="sp"><svg class="i"><use href="assets/icons.svg?v=22#i-search"/></svg><svg class="i"><use href="assets/icons.svg?v=22#i-dots"/></svg></div>
+                    <div class="sp"><svg class="i"><use href="assets/icons.svg?v=23#i-search"/></svg><svg class="i"><use href="assets/icons.svg?v=23#i-dots"/></svg></div>
                   </div>
                   <div class="tg__chat">
                     <span class="tg__date" id="pv-date"></span>
                     <div class="bubble">
                       <div class="bubble__img" id="pv-img-box">
                         <img id="pv-img" alt="" hidden>
-                        <span class="bubble__ph" id="pv-ph"><svg class="i"><use href="assets/icons.svg?v=22#i-image"/></svg></span>
+                        <span class="bubble__ph" id="pv-ph"><svg class="i"><use href="assets/icons.svg?v=23#i-image"/></svg></span>
                         <span class="bubble__tag" id="pv-store" hidden></span>
                       </div>
                       <div class="bubble__txt">
@@ -254,9 +253,9 @@
                         <p id="pv-highlight" hidden></p>
                         <p id="pv-ship-row" style="margin-top:6px" hidden><span class="lnk" id="pv-ship"></span></p>
                       </div>
-                      <div class="bubble__time"><span id="pv-time"></span> <svg class="i"><use href="assets/icons.svg?v=22#i-check2"/></svg></div>
+                      <div class="bubble__time"><span id="pv-time"></span> <svg class="i"><use href="assets/icons.svg?v=23#i-check2"/></svg></div>
                     </div>
-                    <span class="tg__cta" aria-hidden="true"><svg class="i"><use href="assets/icons.svg?v=22#i-doc"/></svg>PEGAR PROMOÇÃO <svg class="i"><use href="assets/icons.svg?v=22#i-arrow"/></svg></span>
+                    <span class="tg__cta" aria-hidden="true"><svg class="i"><use href="assets/icons.svg?v=23#i-doc"/></svg>PEGAR PROMOÇÃO <svg class="i"><use href="assets/icons.svg?v=23#i-arrow"/></svg></span>
                     <p class="tg__foot"><i></i>Pré-visualização: nada é enviado ao canal</p>
                   </div>
                 </div>
@@ -271,9 +270,9 @@
   <p class="toast" id="toast" role="status" hidden></p>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="config.js?v=22"></script>
-  <script src="auth.js?v=22"></script>
-  <script src="shell.js?v=22"></script>
-  <script src="promocao.js?v=22"></script>
+  <script src="config.js?v=23"></script>
+  <script src="auth.js?v=23"></script>
+  <script src="shell.js?v=23"></script>
+  <script src="promocao.js?v=23"></script>
 </body>
 </html>
