@@ -117,9 +117,64 @@
     $("photo-img").hidden = !has;
     $("photo-empty").hidden = has;
     $("photo-remove").hidden = !has;
+    $("photo-ratio").hidden = true;
     if (has) $("photo-img").src = url;
     renderPreview();
   }
+
+  // Proporção da imagem (1:1, 4:3, 16:9…), mostrada no canto da foto.
+  var RATIOS = [["1:1", 1], ["4:3", 4 / 3], ["3:4", 3 / 4], ["16:9", 16 / 9], ["9:16", 9 / 16], ["3:2", 3 / 2], ["2:3", 2 / 3], ["5:4", 5 / 4], ["4:5", 4 / 5]];
+  function ratioLabel(w, h) {
+    if (!w || !h) return "";
+    var r = w / h, best = null, gap = Infinity;
+    RATIOS.forEach(function (c) { var g = Math.abs(c[1] - r) / c[1]; if (g < gap) { gap = g; best = c[0]; } });
+    return gap <= 0.04 ? best : w + "×" + h;
+  }
+  $("photo-img").addEventListener("load", function () {
+    var img = $("photo-img");
+    var label = ratioLabel(img.naturalWidth, img.naturalHeight);
+    $("photo-ratio").textContent = label;
+    $("photo-ratio").hidden = !label;
+  });
+
+  // ---------- URL da imagem ----------
+  // Cole um link https de imagem: a prévia carrega e, se abrir, ele vira a foto da promoção.
+  // "Trocar" abre o seletor de arquivo para enviar uma foto do computador no lugar.
+  var urlInput = $("f-image-url");
+  var urlTimer, urlSeq = 0;
+
+  function syncUrlField() {
+    // Foto enviada do computador não tem link: o campo fica vazio.
+    urlInput.value = !state.file && state.imageUrl ? state.imageUrl : "";
+  }
+
+  function applyImageUrl() {
+    var url = urlInput.value.trim();
+    setErr("image_url", "");
+    if (!url) return;
+    if (!/^https:\/\//i.test(url)) { setErr("image_url", "Use um link completo começando com https://."); return; }
+    if (url.length > 2000) { setErr("image_url", "O link é muito longo."); return; }
+    var mine = ++urlSeq;
+    var probe = new Image();
+    probe.referrerPolicy = "no-referrer";
+    probe.onload = function () {
+      if (mine !== urlSeq) return;
+      if (state.previewUrl && state.previewUrl.indexOf("blob:") === 0) URL.revokeObjectURL(state.previewUrl);
+      state.file = null;
+      F.image.value = "";
+      state.imageUrl = url;
+      showPhoto(url);
+    };
+    probe.onerror = function () {
+      if (mine !== urlSeq) return;
+      setErr("image_url", "Não foi possível carregar essa imagem. Confira o link (precisa abrir direto a foto).");
+    };
+    probe.src = url;
+  }
+
+  urlInput.addEventListener("input", function () { clearTimeout(urlTimer); urlTimer = setTimeout(applyImageUrl, 450); });
+  urlInput.addEventListener("change", function () { clearTimeout(urlTimer); applyImageUrl(); });
+  $("image-swap").addEventListener("click", function () { F.image.click(); });
 
   F.image.addEventListener("change", function () {
     setErr("image", "");
@@ -129,7 +184,11 @@
     if (file.size > MAX_IMAGE) { setErr("image", "A imagem passa de 5 MB."); F.image.value = ""; return; }
     if (state.previewUrl && state.previewUrl.indexOf("blob:") === 0) URL.revokeObjectURL(state.previewUrl);
     state.file = file;
+    state.imageUrl = null;
+    urlSeq++;
+    setErr("image_url", "");
     showPhoto(URL.createObjectURL(file));
+    syncUrlField();
   });
 
   $("photo-remove").addEventListener("click", function () {
@@ -137,7 +196,10 @@
     state.file = null;
     state.imageUrl = null;
     F.image.value = "";
+    urlSeq++;
+    setErr("image_url", "");
     showPhoto(null);
+    syncUrlField();
   });
 
   function uploadImage(file) {
@@ -306,6 +368,7 @@
 
     state.imageUrl = d.image_url || null;
     showPhoto(state.imageUrl);
+    syncUrlField();
   }
 
   function loadDeal() {
