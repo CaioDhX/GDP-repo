@@ -125,5 +125,136 @@
     });
   }
 
-  window.GDP_SHELL = { client: client, ready: ready, profile: profile, toast: toast, refreshCount: refreshCount, deleteDeals: deleteDeals };
+  // ---------- Menu lateral retrátil ----------
+  // Desktop: alterna entre completo e só ícones (lembra a escolha). Celular: abre como gaveta.
+  var SIDE_KEY = "gdp-side-collapsed";
+  var SVG_NS = "http://www.w3.org/2000/svg";
+  var mobileMq = window.matchMedia("(max-width: 860px)");
+
+  function sideStored() { try { return window.localStorage.getItem(SIDE_KEY) === "1"; } catch (e) { return false; } }
+  function sideStore(v) { try { window.localStorage.setItem(SIDE_KEY, v ? "1" : "0"); } catch (e) { /* sem armazenamento */ } }
+
+  var side = document.querySelector(".side");
+  var topbar = document.querySelector(".top");
+  if (side && topbar) {
+    var toggle = document.createElement("button");
+    toggle.type = "button";
+    toggle.className = "side-toggle";
+    var bars = document.createElementNS(SVG_NS, "svg");
+    bars.setAttribute("viewBox", "0 0 24 24");
+    bars.setAttribute("class", "i");
+    bars.setAttribute("aria-hidden", "true");
+    var path = document.createElementNS(SVG_NS, "path");
+    path.setAttribute("d", "M4 7h16M4 12h16M4 17h16");
+    bars.appendChild(path);
+    toggle.appendChild(bars);
+    topbar.insertBefore(toggle, topbar.firstChild);
+
+    var backdrop = document.createElement("div");
+    backdrop.className = "side-backdrop";
+    document.body.appendChild(backdrop);
+
+    // Tooltip com o nome de cada item quando só os ícones aparecem.
+    Array.prototype.forEach.call(side.querySelectorAll(".nav a"), function (a) {
+      a.setAttribute("title", a.textContent.replace(/\d+|…/g, "").trim());
+    });
+
+    function syncToggle() {
+      var open = mobileMq.matches ? document.body.classList.contains("side-open") : !document.body.classList.contains("side-collapsed");
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute("aria-label", open ? "Recolher menu" : "Abrir menu");
+      toggle.setAttribute("title", open ? "Recolher menu" : "Abrir menu");
+    }
+    document.body.classList.toggle("side-collapsed", sideStored());
+    syncToggle();
+
+    toggle.addEventListener("click", function () {
+      if (mobileMq.matches) {
+        document.body.classList.toggle("side-open");
+      } else {
+        var collapsed = document.body.classList.toggle("side-collapsed");
+        sideStore(collapsed);
+      }
+      syncToggle();
+    });
+    backdrop.addEventListener("click", function () { document.body.classList.remove("side-open"); syncToggle(); });
+    side.addEventListener("click", function (event) {
+      if (mobileMq.matches && event.target.closest && event.target.closest("a")) document.body.classList.remove("side-open");
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && document.body.classList.contains("side-open")) { document.body.classList.remove("side-open"); syncToggle(); }
+    });
+    var onMq = function () { document.body.classList.remove("side-open"); syncToggle(); };
+    if (mobileMq.addEventListener) mobileMq.addEventListener("change", onMq); else mobileMq.addListener(onMq);
+  }
+
+  // ---------- Caixa de confirmação ----------
+  // confirm({ title, body, name, confirmLabel, cancelLabel, danger }) -> Promise<boolean>.
+  // Usa o <dialog> nativo (fundo escurecido, Esc e foco tratados pelo navegador).
+  function confirmDialog(opts) {
+    opts = opts || {};
+    return new Promise(function (resolve) {
+      var dlg = document.createElement("dialog");
+      if (typeof dlg.showModal !== "function") {
+        resolve(window.confirm([opts.title, opts.name, opts.body].filter(Boolean).join("\n")));
+        return;
+      }
+      function el(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text != null) node.textContent = text;
+        return node;
+      }
+      var danger = !!opts.danger;
+      dlg.className = "dlg" + (danger ? " dlg--danger" : "");
+      dlg.setAttribute("aria-labelledby", "dlg-title");
+
+      var ico = el("span", "dlg__ico");
+      var svg = document.createElementNS(SVG_NS, "svg");
+      svg.setAttribute("class", "i");
+      var use = document.createElementNS(SVG_NS, "use");
+      use.setAttribute("href", "assets/icons.svg?v=26#" + (danger ? "i-trash" : "i-info"));
+      svg.appendChild(use);
+      ico.appendChild(svg);
+      dlg.appendChild(ico);
+
+      var title = el("h2", "dlg__title", opts.title || "Confirmar");
+      title.id = "dlg-title";
+      dlg.appendChild(title);
+      if (opts.name) dlg.appendChild(el("p", "dlg__name", opts.name));
+      if (opts.body) dlg.appendChild(el("p", "dlg__body", opts.body));
+
+      var row = el("div", "dlg__actions");
+      var cancel = el("button", "dlg__btn", opts.cancelLabel || "Cancelar");
+      cancel.type = "button";
+      var ok = el("button", "dlg__btn dlg__btn--" + (danger ? "danger" : "primary"), opts.confirmLabel || "Confirmar");
+      ok.type = "button";
+      row.appendChild(cancel);
+      row.appendChild(ok);
+      dlg.appendChild(row);
+
+      var done = false;
+      function finish(answer) {
+        if (done) return;
+        done = true;
+        if (dlg.open) dlg.close();
+        dlg.remove();
+        resolve(answer);
+      }
+      cancel.addEventListener("click", function () { finish(false); });
+      ok.addEventListener("click", function () { finish(true); });
+      // Clique no fundo escurecido cancela.
+      dlg.addEventListener("click", function (event) { if (event.target === dlg) finish(false); });
+      // Esc: o navegador dispara "cancel"; tratamos aqui para resolver na hora.
+      dlg.addEventListener("cancel", function (event) { event.preventDefault(); finish(false); });
+      dlg.addEventListener("close", function () { finish(false); });
+
+      document.body.appendChild(dlg);
+      dlg.showModal();
+      // Em ações destrutivas o foco começa em "Cancelar", para um Enter sem querer não apagar nada.
+      (danger ? cancel : ok).focus();
+    });
+  }
+
+  window.GDP_SHELL = { client: client, ready: ready, profile: profile, toast: toast, refreshCount: refreshCount, deleteDeals: deleteDeals, confirm: confirmDialog };
 })();
