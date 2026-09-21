@@ -46,7 +46,6 @@ img { display: block; }
   stroke-linejoin: round;
 }
 .icon--red { color: var(--red); }
-.icon--green { color: var(--green); width: 14px; height: 14px; }
 
 .dot {
   display: inline-block;
@@ -261,8 +260,7 @@ label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
   font-weight: 700;
   color: var(--muted);
 }
-.tls { display: inline-flex; align-items: center; gap: 8px; }
-.login__foot nav { display: flex; align-items: center; gap: 10px; }
+.login__foot nav { display: flex; align-items: center; gap: 10px; margin-left: auto; }
 .login__foot nav i { font-style: normal; color: #a3a7b8; }
 .login__foot nav a:hover { color: var(--ink); }
 
