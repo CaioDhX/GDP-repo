@@ -430,7 +430,7 @@ img { display: block; max-width: 100%; }
 .toast[hidden] { display: none; }
 
 /* ---------- Responsivo ---------- */
-@media (max-width: 1180px) {
+@media (max-width: 1080px) {
   .grid { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 860px) {
