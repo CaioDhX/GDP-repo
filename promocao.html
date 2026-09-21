@@ -3,73 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Detalhes da Promoção — GOAT Promo</title>
+  <title>Nova Promoção — GOAT Promo</title>
   <meta name="robots" content="noindex">
   <link rel="icon" href="assets/favicon.webp?v=7" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.css?v=11">
+  <link rel="stylesheet" href="app.css?v=12">
 </head>
 <body class="gate">
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></symbol>
-    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L3 13V3h10l7.6 7.6a2 2 0 0 1 0 2.8Z"/><circle cx="7.5" cy="7.5" r="1.2"/></symbol>
-    <symbol id="i-plus-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></symbol>
-    <symbol id="i-network" viewBox="0 0 24 24"><circle cx="12" cy="12" r="2.5"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/><path d="m6.5 6.5 3.7 3.7M17.5 6.5l-3.7 3.7M6.5 17.5l3.7-3.7M17.5 17.5l-3.7-3.7"/></symbol>
-    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></symbol>
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
-    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
-    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
-    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
-    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
-    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="m19 6-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></symbol>
-    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></symbol>
-    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M1 6h13v11H1z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
-    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M3 9a2 2 0 0 0 0 6v3a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-3a2 2 0 0 1 0-6V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Z"/><path d="M13 5v14" stroke-dasharray="2 3"/></symbol>
-    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
-    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.3 2.4 2.4 4.6-4.9"/></symbol>
-    <symbol id="i-pointer" viewBox="0 0 24 24"><path d="m4 4 7 16 2.5-6.5L20 11Z"/></symbol>
-    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
-    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M6 7h12l1 13H5Z"/><path d="M9 7a3 3 0 0 1 6 0"/></symbol>
-    <symbol id="i-trend" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
-    <symbol id="i-activity" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></symbol>
-    <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></symbol>
-    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.5" fill="currentColor" stroke="none"/></symbol>
-    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
-    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7Z"/></symbol>
-    <symbol id="i-check2" viewBox="0 0 24 24"><path d="m1.5 12.5 4.5 4.5L14 8"/><path d="m9 15 1.5 1.5L19 8"/></symbol>
-    <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M14.5 9.5c0-1-1.1-1.7-2.5-1.7s-2.5.7-2.5 1.7 1.1 1.5 2.5 1.5 2.5.5 2.5 1.5-1.1 1.7-2.5 1.7-2.5-.7-2.5-1.7"/></symbol>
-    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.7 7.1 5.6 11.8c-.8.3-.8.8-.1 1l3 .9 1.2 3.7c.1.4.3.5.6.5.3 0 .4-.1.6-.3l1.7-1.6 3.1 2.3c.6.3 1 .2 1.2-.5l2-9.5c.2-.9-.3-1.3-1.2-.9Zm-8 5.5 6.6-4.2c.3-.2.6-.1.4.1l-5.3 4.9-.2 2.2-1.5-3Z" fill-rule="evenodd"/></symbol>
-  </svg>
-
   <div class="app">
     <!-- Sidebar -->
     <aside class="side" aria-label="Menu principal">
       <div class="side__brand">
-        <img class="side__logo" src="assets/logo.webp?v=11" alt="GOAT das Promoções" width="40" height="40">
+        <img class="side__logo" src="assets/logo.webp?v=9" alt="GOAT das Promoções" width="40" height="40">
         <div class="side__name"><strong>GOAT<br>Promo</strong><span>PAINEL ADMIN</span></div>
         <span class="online"><i></i>ONLINE</span>
       </div>
 
       <p class="side__label">GERENCIAMENTO</p>
       <nav class="nav">
-        <a href="painel.html"><svg class="i"><use href="#i-grid"/></svg>Dashboard</a>
-        <a href="promocao.html" aria-current="page"><svg class="i"><use href="#i-tag"/></svg>Promoções<span class="nav__count">128</span></a>
-        <a href="#" data-demo><svg class="i"><use href="#i-plus-circle"/></svg>Nova Promoção<span class="nav__cta">Criar</span></a>
-        <a href="#" data-demo><svg class="i"><use href="#i-network"/></svg>Afiliados</a>
-        <a href="#" data-demo><svg class="i"><use href="#i-gear"/></svg>Configurações</a>
+        <a href="painel.html"><svg class="i"><use href="assets/icons.svg#i-grid"/></svg>Dashboard</a>
+        <a href="promocoes.html" data-nav="lista"><svg class="i"><use href="assets/icons.svg#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
+        <a href="promocao.html" data-nav="nova" aria-current="page"><svg class="i"><use href="assets/icons.svg#i-plus-circle"/></svg>Nova Promoção<span class="nav__cta">Criar</span></a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg#i-network"/></svg>Afiliados</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg#i-gear"/></svg>Configurações</a>
       </nav>
 
       <div class="sync">
         <div class="sync__top">
-          <span class="sync__icon"><svg class="i i--fill"><use href="#i-plane"/></svg></span>
+          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg#i-plane"/></svg></span>
           <div><strong>TELEGRAM SYNC</strong><span>@goatdaspromocoes</span></div>
           <i class="sync__dot"></i>
         </div>
-        <div class="sync__bot"><svg class="i"><use href="#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="#i-check-circle"/></svg></div>
+        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg#i-check-circle"/></svg></div>
       </div>
     </aside>
 
@@ -77,25 +44,25 @@
       <!-- Topbar -->
       <header class="top">
         <nav class="crumbs" aria-label="Você está em">
-          <a href="painel.html">Painel</a><svg class="i"><use href="#i-right"/></svg>
-          <a href="promocao.html">Promoções</a><svg class="i"><use href="#i-right"/></svg>
-          <strong>Detalhes #GP-8492</strong>
+          <a href="painel.html">Painel</a><svg class="i"><use href="assets/icons.svg#i-right"/></svg>
+          <a href="promocoes.html">Promoções</a><svg class="i"><use href="assets/icons.svg#i-right"/></svg>
+          <strong id="crumb-current">Nova promoção</strong>
         </nav>
 
         <label class="search">
-          <svg class="i"><use href="#i-search"/></svg>
+          <svg class="i"><use href="assets/icons.svg#i-search"/></svg>
           <input id="search" type="search" placeholder="Buscar promoções, cupons ou SKU" autocomplete="off">
           <kbd>Ctrl K</kbd>
         </label>
 
         <div class="top__right">
-          <button class="btn-new" type="button" data-demo><svg class="i"><use href="#i-plus"/></svg><span>Nova Promoção</span></button>
-          <button class="bell" type="button" aria-label="Notificações" data-demo><svg class="i"><use href="#i-bell"/></svg></button>
+          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg#i-plus"/></svg><span>Nova Promoção</span></a>
+          <button class="bell" type="button" aria-label="Notificações" data-demo><svg class="i"><use href="assets/icons.svg#i-bell"/></svg></button>
           <div class="user">
             <button class="user__btn" type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
               <span class="avatar-u" id="user-initial">?</span>
-              <span><span class="user__name" id="user-name">…</span><span class="user__role">Administrador</span></span>
-              <svg class="i"><use href="#i-down"/></svg>
+              <span><span class="user__name" id="user-name">…</span><span class="user__role">…</span></span>
+              <svg class="i"><use href="assets/icons.svg#i-down"/></svg>
             </button>
             <div class="menu" id="user-menu" hidden>
               <p id="user-email"></p>
@@ -106,163 +73,200 @@
       </header>
 
       <main class="content">
-        <div class="head">
-          <div>
-            <p class="eyebrow">PROMOÇÕES <svg class="i"><use href="#i-right"/></svg> DETALHES #GP-8492</p>
-            <h1>Monitor Gamer LG UltraGear 24” 180Hz <span class="chip chip--ok">PUBLICADA</span><span class="chip chip--store">KABUM!</span></h1>
-          </div>
-          <div class="actions">
-            <button class="btn" type="button" data-demo><svg class="i"><use href="#i-pencil"/></svg>Editar</button>
-            <button class="btn" type="button" data-demo><svg class="i"><use href="#i-copy"/></svg>Duplicar</button>
-            <button class="btn btn--tg" type="button" data-demo><svg class="i i--fill"><use href="#i-plane"/></svg>Reenviar Canal</button>
-            <button class="btn btn--danger" type="button" data-demo aria-label="Excluir promoção"><svg class="i"><use href="#i-trash"/></svg></button>
-          </div>
+        <div class="empty" id="not-found" hidden>
+          <svg class="i"><use href="assets/icons.svg#i-inbox"/></svg>
+          <h2>Promoção não encontrada</h2>
+          <p>Ela pode ter sido excluída ou o link está incorreto.</p>
+          <a class="btn" href="promocoes.html">Ver todas as promoções</a>
         </div>
 
-        <div class="grid">
-          <div class="col">
-            <!-- Ficha técnica -->
-            <section class="card">
-              <header class="card__head">
-                <h2 class="card__title"><svg class="i"><use href="#i-doc"/></svg>Ficha Técnica &amp; Comercial</h2>
-                <span class="sysid">ID Sistema: <b class="mono">GP-8492-LG</b></span>
-              </header>
-              <div class="card__body">
-                <div class="spec">
-                  <div class="photo">
-                    <img src="assets/promo-monitor.jpg?v=11" alt="Monitor Gamer LG UltraGear 24 polegadas 180Hz" width="169" height="152">
-                    <span class="off">-31%</span>
-                  </div>
-                  <div class="value">
-                    <span class="label">Valor em campanha</span>
-                    <div class="price-row"><s class="price-old">R$ 1.299,90</s><strong class="price">R$ 899,90</strong></div>
-                    <div class="pills">
-                      <span class="save"><svg class="i"><use href="#i-coin"/></svg>Economia de R$ 400,00</span>
-                      <span class="ship"><svg class="i"><use href="#i-truck"/></svg>Frete Grátis</span>
-                    </div>
-                    <div class="coupon">
-                      <svg class="i"><use href="#i-ticket"/></svg>
-                      <div><small>Cupom Aplicável</small><strong>GOAT100</strong></div>
-                      <button class="btn-copy" type="button" id="copy-coupon" data-code="GOAT100">Copiar</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="pair">
-                  <div class="box">
-                    <span class="label">Parceiro / Loja Oficial</span>
-                    <div class="val"><span class="store-ico">K</span>KaBuM!<a href="https://www.kabum.com.br/" target="_blank" rel="noopener noreferrer">Portal <svg class="i"><use href="#i-ext"/></svg></a></div>
-                  </div>
-                  <div class="box">
-                    <span class="label">Condição Logística</span>
-                    <p class="plain">Entrega Prime / Frete Grátis Sul &amp; Sudeste</p>
-                  </div>
-                </div>
-
-                <div class="aff">
-                  <span class="label">Link de Afiliado com Rastreamento</span>
-                  <div class="aff__row">
-                    <span class="aff__url mono">https://kabum.com.br/produto/monitor-lg-ultragear?tag=goatpromo</span>
-                    <a class="btn" href="https://kabum.com.br/produto/monitor-lg-ultragear?tag=goatpromo" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="#i-ext"/></svg>Testar Link</a>
-                  </div>
-                </div>
-
-                <div class="meta">
-                  <div>
-                    <span class="label">Registro Inicial</span>
-                    <p>24/10/2024 às 11:42</p>
-                    <small>por Carlos Silva (Admin)</small>
-                  </div>
-                  <div>
-                    <span class="label">Disparo no Telegram</span>
-                    <p class="ok"><svg class="i"><use href="#i-check-circle"/></svg>Publicada às 12:00</p>
-                    <small>ID Msg Telegram: #92841</small>
-                  </div>
-                </div>
-              </div>
-            </section>
-
-            <!-- Engajamento -->
-            <section class="card">
-              <header class="card__head">
-                <h2 class="card__title"><svg class="i"><use href="#i-activity"/></svg>Engajamento em Tempo Real (Telegram)</h2>
-                <span class="sync-pill">Sincronizado</span>
-              </header>
-              <div class="card__body">
-                <div class="kpis">
-                  <div class="kpi">
-                    <div class="kpi__top"><span class="label">Cliques no link</span><svg class="i"><use href="#i-pointer"/></svg></div>
-                    <strong>1.482</strong>
-                    <small class="up"><svg class="i"><use href="#i-trend"/></svg>+18.4% acima da média</small>
-                  </div>
-                  <div class="kpi">
-                    <div class="kpi__top"><span class="label">Visualizações</span><svg class="i"><use href="#i-eye"/></svg></div>
-                    <strong>8.940</strong>
-                    <small>Alcance de 78% do canal</small>
-                  </div>
-                  <div class="kpi">
-                    <div class="kpi__top"><span class="label">Conversões est.</span><svg class="i"><use href="#i-bag"/></svg></div>
-                    <strong>64</strong>
-                    <small>4.3% CTR link-to-buy</small>
-                  </div>
-                </div>
-
-                <div class="flow">
-                  <div class="flow__head"><span>Fluxo de Cliques por Hora (Pós-disparo)</span><b class="mono">PICO: 412 CLIQUES (12H – 13H)</b></div>
-                  <div class="bars" role="img" aria-label="Cliques por hora após o disparo, com pico entre 12h e 13h">
-                    <i style="--h:14%;--c:#ead1d3"></i><i style="--h:26%;--c:#e3bcc0"></i><i style="--h:100%;--c:#a52b2f"></i><i style="--h:84%;--c:#bd5a5e"></i>
-                    <i style="--h:58%;--c:#d38f92"></i><i style="--h:64%;--c:#d99a9d"></i><i style="--h:34%;--c:#e6c3c5"></i><i style="--h:22%;--c:#edd6d8"></i>
-                  </div>
-                </div>
-              </div>
-            </section>
+        <form id="deal-form" novalidate>
+          <div class="head">
+            <div>
+              <p class="eyebrow">PROMOÇÕES <svg class="i"><use href="assets/icons.svg#i-right"/></svg> <span id="eyebrow-current">NOVA PROMOÇÃO</span></p>
+              <h1><span id="page-title">Nova Promoção</span> <span class="chip" id="status-chip" hidden></span><span class="chip chip--store" id="store-chip" hidden></span></h1>
+            </div>
+            <div class="actions">
+              <a class="btn" href="promocoes.html">Cancelar</a>
+              <button class="btn btn--danger" type="button" id="delete-btn" hidden aria-label="Excluir promoção" title="Excluir promoção"><svg class="i"><use href="assets/icons.svg#i-trash"/></svg></button>
+              <button class="btn btn--primary" type="submit" id="save-btn"><svg class="i"><use href="assets/icons.svg#i-save"/></svg><span>Salvar promoção</span></button>
+            </div>
           </div>
 
-          <div class="col">
-            <!-- Simulação Telegram -->
-            <section class="card">
-              <header class="card__head">
-                <h2 class="card__title"><svg class="i i--fill i--tg"><use href="#i-plane"/></svg>Simulação Oficial Telegram</h2>
-                <a class="link-tg" href="#" data-demo>Abrir no App <svg class="i"><use href="#i-ext"/></svg></a>
-              </header>
-              <div class="tg" style="margin-top:14px">
-                <div class="tg__bar">
-                  <svg class="i"><use href="#i-back"/></svg>
-                  <img src="assets/logo.webp?v=11" alt="" width="34" height="34">
-                  <div><strong>GOAT das Promoções</strong><small>11.450 inscritos</small></div>
-                  <div class="sp"><svg class="i"><use href="#i-search"/></svg><svg class="i"><use href="#i-dots"/></svg></div>
-                </div>
-                <div class="tg__chat">
-                  <span class="tg__date">24 de outubro</span>
-                  <div class="bubble">
-                    <div class="bubble__img">
-                      <img src="assets/promo-monitor.jpg?v=11" alt="" width="169" height="152">
-                      <span class="bubble__tag">KABUM</span>
-                    </div>
-                    <div class="bubble__txt">
-                      <p class="t">🔥 Monitor Gamer LG UltraGear 24" 180Hz IPS</p>
-                      <p style="margin-top:6px">📌 De: <s>R$ 1.299,90</s></p>
-                      <p>👉 <span class="by">Por apenas: R$ 899,90!</span></p>
-                      <p class="small">(À vista no PIX ou boleto)</p>
-                      <div class="cp">🎫 CUPOM: <code class="mono">GOAT100</code><span>Toque p/ copiar</span></div>
-                      <p>⚡ 180Hz nativo, tempo de resposta 1ms MBR, tela IPS com HDR10 e compatível com FreeSync/G-Sync!</p>
-                      <p style="margin-top:6px"><span class="lnk">📦 Frete Grátis com Prime KaBuM</span></p>
-                    </div>
-                    <div class="bubble__time">12:00 <svg class="i"><use href="#i-check2"/></svg></div>
+          <div class="grid">
+            <div class="col">
+              <section class="card">
+                <header class="card__head">
+                  <h2 class="card__title"><svg class="i"><use href="assets/icons.svg#i-doc"/></svg>Ficha Técnica &amp; Comercial</h2>
+                  <span class="sysid">ID Sistema: <b class="mono" id="sys-id">gerado ao salvar</b></span>
+                </header>
+                <div class="card__body">
+                  <div class="f">
+                    <label for="f-title">Título da promoção <em>*</em></label>
+                    <input class="f-input" id="f-title" name="title" type="text" maxlength="120" placeholder='Ex.: Monitor Gamer LG UltraGear 24" 180Hz IPS' autocomplete="off">
+                    <small class="f-err" data-for="title"></small>
                   </div>
-                  <button class="tg__cta" type="button" data-demo><svg class="i"><use href="#i-doc"/></svg>PEGAR PROMOÇÃO <svg class="i"><use href="#i-arrow"/></svg></button>
-                  <p class="tg__foot"><i></i>Transmitido para canal público @goatpromo</p>
-                </div>
-              </div>
-            </section>
 
-            <section class="card valid">
-              <svg class="i"><use href="#i-check-circle"/></svg>
-              <div><strong>Canal Oficial Validado</strong><small>A integridade do link é auditada a cada 15 minutos</small></div>
-              <button class="btn" type="button" data-demo>Auditar Agora</button>
-            </section>
+                  <div class="spec">
+                    <div>
+                      <label class="photo photo--input" for="f-image" id="photo-box">
+                        <img id="photo-img" alt="Foto do produto" hidden>
+                        <span class="photo__empty" id="photo-empty"><svg class="i"><use href="assets/icons.svg#i-image"/></svg>Adicionar foto<small>JPG, PNG ou WebP · até 5 MB</small></span>
+                        <span class="off" id="photo-off" hidden></span>
+                      </label>
+                      <input id="f-image" name="image" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                      <button class="link-btn" type="button" id="photo-remove" hidden>Remover foto</button>
+                      <small class="f-err" data-for="image"></small>
+                    </div>
+
+                    <div class="value">
+                      <span class="label">Valor em campanha</span>
+                      <div class="money-row">
+                        <div class="f">
+                          <label for="f-price-original">Preço original</label>
+                          <div class="money"><span>R$</span><input class="f-input" id="f-price-original" name="price_original" type="text" inputmode="decimal" placeholder="1.299,90" autocomplete="off"></div>
+                          <small class="f-err" data-for="price_original"></small>
+                        </div>
+                        <div class="f">
+                          <label for="f-price-promo">Preço promocional <em>*</em></label>
+                          <div class="money"><span>R$</span><input class="f-input" id="f-price-promo" name="price_promo" type="text" inputmode="decimal" placeholder="899,90" autocomplete="off"></div>
+                          <small class="f-err" data-for="price_promo"></small>
+                        </div>
+                      </div>
+                      <div class="pills" id="calc-pills" hidden>
+                        <span class="save" id="calc-save"><svg class="i"><use href="assets/icons.svg#i-coin"/></svg><span></span></span>
+                      </div>
+
+                      <div class="coupon">
+                        <svg class="i"><use href="assets/icons.svg#i-ticket"/></svg>
+                        <div class="coupon__field">
+                          <label for="f-coupon">Cupom aplicável</label>
+                          <input class="f-input f-input--plain" id="f-coupon" name="coupon_code" type="text" maxlength="40" placeholder="GOAT100" autocomplete="off">
+                        </div>
+                      </div>
+                      <label class="check-row"><input type="checkbox" id="f-coupon-cart"> Aplicar o cupom no carrinho</label>
+                    </div>
+                  </div>
+
+                  <div class="pair">
+                    <div class="box">
+                      <label class="label" for="f-store">Parceiro / Loja oficial <em>*</em></label>
+                      <select class="f-input" id="f-store" name="store_id"><option value="">Carregando lojas…</option></select>
+                      <small class="f-err" data-for="store_id"></small>
+                    </div>
+                    <div class="box">
+                      <label class="label" for="f-shipping">Condição logística (frete)</label>
+                      <select class="f-input" id="f-shipping" name="shipping">
+                        <option value="unknown">Não informado</option>
+                        <option value="free">Frete grátis</option>
+                        <option value="paid">Frete pago</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="aff">
+                    <label class="label" for="f-affiliate">Link de afiliado com rastreamento <em>*</em></label>
+                    <div class="aff__row">
+                      <input class="f-input f-input--plain mono" id="f-affiliate" name="affiliate_url" type="url" placeholder="https://loja.com.br/produto?tag=goatpromo" autocomplete="off">
+                      <a class="btn" id="test-link" href="#" target="_blank" rel="noopener noreferrer"><svg class="i"><use href="assets/icons.svg#i-ext"/></svg>Testar Link</a>
+                    </div>
+                    <small class="f-err" data-for="affiliate_url"></small>
+                  </div>
+
+                  <div class="f">
+                    <label for="f-highlight">Destaque da mensagem</label>
+                    <input class="f-input" id="f-highlight" name="highlight" type="text" maxlength="300" placeholder="Ex.: 180Hz nativo, tela IPS com HDR10 e compatível com FreeSync" autocomplete="off">
+                  </div>
+                  <div class="f">
+                    <label for="f-payment">Observação de pagamento</label>
+                    <input class="f-input" id="f-payment" name="payment_note" type="text" maxlength="120" placeholder="Ex.: À vista no PIX ou boleto" autocomplete="off">
+                  </div>
+                  <div class="f">
+                    <label for="f-description">Descrição (interna)</label>
+                    <textarea class="f-input" id="f-description" name="description" rows="3" maxlength="2000" placeholder="Detalhes adicionais sobre a oferta"></textarea>
+                  </div>
+
+                  <div class="pair pair--form">
+                    <div class="box">
+                      <label class="label" for="f-category">Categoria</label>
+                      <select class="f-input" id="f-category" name="category_id"><option value="">Sem categoria</option></select>
+                    </div>
+                    <div class="box">
+                      <label class="label" for="f-sku">SKU / código do produto</label>
+                      <input class="f-input" id="f-sku" name="sku" type="text" maxlength="60" autocomplete="off">
+                    </div>
+                  </div>
+
+                  <div class="pair pair--form">
+                    <div class="box">
+                      <label class="label" for="f-status">Situação</label>
+                      <select class="f-input" id="f-status" name="status">
+                        <option value="draft">Rascunho</option>
+                        <option value="ready">Pronta para publicar</option>
+                      </select>
+                      <small class="f-hint" id="status-hint"></small>
+                    </div>
+                    <div class="box">
+                      <label class="label" for="f-expires">Válida até (opcional)</label>
+                      <input class="f-input" id="f-expires" name="expires_at" type="datetime-local">
+                    </div>
+                  </div>
+
+                  <div class="meta" id="meta-info" hidden>
+                    <div>
+                      <span class="label">Registro inicial</span>
+                      <p id="meta-created">—</p>
+                      <small id="meta-author"></small>
+                    </div>
+                    <div>
+                      <span class="label">Disparo no Telegram</span>
+                      <p id="meta-published">Ainda não publicada</p>
+                      <small id="meta-updated"></small>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div class="col">
+              <section class="card">
+                <header class="card__head">
+                  <h2 class="card__title"><svg class="i i--fill i--tg"><use href="assets/icons.svg#i-plane"/></svg>Simulação Oficial Telegram</h2>
+                </header>
+                <div class="tg" style="margin-top:14px">
+                  <div class="tg__bar">
+                    <svg class="i"><use href="assets/icons.svg#i-back"/></svg>
+                    <img src="assets/logo.webp?v=9" alt="" width="34" height="34">
+                    <div><strong>GOAT das Promoções</strong><small>canal</small></div>
+                    <div class="sp"><svg class="i"><use href="assets/icons.svg#i-search"/></svg><svg class="i"><use href="assets/icons.svg#i-dots"/></svg></div>
+                  </div>
+                  <div class="tg__chat">
+                    <span class="tg__date" id="pv-date"></span>
+                    <div class="bubble">
+                      <div class="bubble__img" id="pv-img-box">
+                        <img id="pv-img" alt="" hidden>
+                        <span class="bubble__ph" id="pv-ph"><svg class="i"><use href="assets/icons.svg#i-image"/></svg></span>
+                        <span class="bubble__tag" id="pv-store" hidden></span>
+                      </div>
+                      <div class="bubble__txt">
+                        <p class="t" id="pv-title">🔥 Título da promoção</p>
+                        <p id="pv-old-row" style="margin-top:6px" hidden>📌 De: <s id="pv-old"></s></p>
+                        <p>👉 <span class="by" id="pv-price">Por apenas: R$ —</span></p>
+                        <p class="small" id="pv-note" hidden></p>
+                        <div class="cp" id="pv-coupon-row" hidden>🎫 CUPOM: <code class="mono" id="pv-coupon"></code><span id="pv-coupon-hint">Toque p/ copiar</span></div>
+                        <p id="pv-highlight" hidden></p>
+                        <p id="pv-ship-row" style="margin-top:6px" hidden><span class="lnk" id="pv-ship"></span></p>
+                      </div>
+                      <div class="bubble__time"><span id="pv-time"></span> <svg class="i"><use href="assets/icons.svg#i-check2"/></svg></div>
+                    </div>
+                    <span class="tg__cta" aria-hidden="true"><svg class="i"><use href="assets/icons.svg#i-doc"/></svg>PEGAR PROMOÇÃO <svg class="i"><use href="assets/icons.svg#i-arrow"/></svg></span>
+                    <p class="tg__foot"><i></i>Pré-visualização: nada é enviado ao canal</p>
+                  </div>
+                </div>
+              </section>
+            </div>
           </div>
-        </div>
+        </form>
       </main>
     </div>
   </div>
@@ -270,8 +274,9 @@
   <p class="toast" id="toast" role="status" hidden></p>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="config.js?v=11"></script>
-  <script src="auth.js?v=11"></script>
-  <script src="promocao.js?v=11"></script>
+  <script src="config.js?v=12"></script>
+  <script src="auth.js?v=12"></script>
+  <script src="shell.js?v=12"></script>
+  <script src="promocao.js?v=12"></script>
 </body>
 </html>

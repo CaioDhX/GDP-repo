@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Promoções — GOAT Promo</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.webp?v=7" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=12">
+</head>
+<body class="gate">
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="side" aria-label="Menu principal">
+      <div class="side__brand">
+        <img class="side__logo" src="assets/logo.webp?v=9" alt="GOAT das Promoções" width="40" height="40">
+        <div class="side__name"><strong>GOAT<br>Promo</strong><span>PAINEL ADMIN</span></div>
+        <span class="online"><i></i>ONLINE</span>
+      </div>
+
+      <p class="side__label">GERENCIAMENTO</p>
+      <nav class="nav">
+        <a href="painel.html"><svg class="i"><use href="assets/icons.svg#i-grid"/></svg>Dashboard</a>
+        <a href="promocoes.html" data-nav="lista" aria-current="page"><svg class="i"><use href="assets/icons.svg#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
+        <a href="promocao.html" data-nav="nova"><svg class="i"><use href="assets/icons.svg#i-plus-circle"/></svg>Nova Promoção<span class="nav__cta">Criar</span></a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg#i-network"/></svg>Afiliados</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg#i-gear"/></svg>Configurações</a>
+      </nav>
+
+      <div class="sync">
+        <div class="sync__top">
+          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg#i-plane"/></svg></span>
+          <div><strong>TELEGRAM SYNC</strong><span>@goatdaspromocoes</span></div>
+          <i class="sync__dot"></i>
+        </div>
+        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg#i-check-circle"/></svg></div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <!-- Topbar -->
+      <header class="top">
+        <nav class="crumbs" aria-label="Você está em">
+          <a href="painel.html">Painel</a><svg class="i"><use href="assets/icons.svg#i-right"/></svg>
+          <strong>Promoções</strong>
+        </nav>
+
+        <label class="search">
+          <svg class="i"><use href="assets/icons.svg#i-search"/></svg>
+          <input id="search" type="search" placeholder="Buscar promoções, cupons ou SKU" autocomplete="off">
+          <kbd>Ctrl K</kbd>
+        </label>
+
+        <div class="top__right">
+          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg#i-plus"/></svg><span>Nova Promoção</span></a>
+          <button class="bell" type="button" aria-label="Notificações" data-demo><svg class="i"><use href="assets/icons.svg#i-bell"/></svg></button>
+          <div class="user">
+            <button class="user__btn" type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
+              <span class="avatar-u" id="user-initial">?</span>
+              <span><span class="user__name" id="user-name">…</span><span class="user__role">…</span></span>
+              <svg class="i"><use href="assets/icons.svg#i-down"/></svg>
+            </button>
+            <div class="menu" id="user-menu" hidden>
+              <p id="user-email"></p>
+              <button type="button" id="logout">Sair</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="head">
+          <div>
+            <p class="eyebrow">GERENCIAMENTO</p>
+            <h1>Promoções</h1>
+          </div>
+          <div class="actions">
+            <a class="btn btn--primary" href="promocao.html"><svg class="i"><use href="assets/icons.svg#i-plus"/></svg><span>Nova Promoção</span></a>
+          </div>
+        </div>
+
+        <section class="card list">
+          <div class="list__tools">
+            <span class="list__count" id="list-count">Carregando…</span>
+            <select class="f-input f-input--sm" id="filter-status" aria-label="Filtrar por situação">
+              <option value="">Todas as situações</option>
+              <option value="draft">Rascunho</option>
+              <option value="ready">Pronta</option>
+              <option value="queued">Na fila</option>
+              <option value="published">Publicada</option>
+              <option value="expired">Expirada</option>
+              <option value="failed">Falhou</option>
+            </select>
+          </div>
+
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr><th>Promoção</th><th>Loja</th><th class="num">Preço</th><th class="num">Desconto</th><th>Situação</th><th>Criada em</th></tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+
+          <div class="empty" id="empty" hidden>
+            <svg class="i"><use href="assets/icons.svg#i-inbox"/></svg>
+            <h2 id="empty-title">Nenhuma promoção cadastrada</h2>
+            <p id="empty-text">Cadastre a primeira para ela aparecer aqui.</p>
+            <a class="btn btn--primary" href="promocao.html"><svg class="i"><use href="assets/icons.svg#i-plus"/></svg><span>Nova Promoção</span></a>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <p class="toast" id="toast" role="status" hidden></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="config.js?v=12"></script>
+  <script src="auth.js?v=12"></script>
+  <script src="shell.js?v=12"></script>
+  <script src="promocoes.js?v=12"></script>
+</body>
+</html>
