@@ -225,7 +225,7 @@
       var svg = document.createElementNS(SVG_NS, "svg");
       svg.setAttribute("class", "i");
       var use = document.createElementNS(SVG_NS, "use");
-      use.setAttribute("href", "assets/icons.svg?v=28#" + (danger ? "i-trash" : "i-info"));
+      use.setAttribute("href", "assets/icons.svg?v=29#" + (danger ? "i-trash" : "i-info"));
       svg.appendChild(use);
       ico.appendChild(svg);
       dlg.appendChild(ico);
