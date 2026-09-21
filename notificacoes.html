@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notificações — GOAT Promo</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/favicon.webp?v=7" type="image/webp">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="app.css?v=25">
+</head>
+<body class="gate">
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="side" aria-label="Menu principal">
+      <div class="side__brand">
+        <img class="side__logo" src="assets/logo.webp?v=9" alt="GOAT das Promoções" width="40" height="40">
+        <div class="side__name"><strong>GOAT<br>Promo</strong><span>PAINEL ADMIN</span></div>
+        <span class="online"><i></i>ONLINE</span>
+      </div>
+
+      <p class="side__label">GERENCIAMENTO</p>
+      <nav class="nav">
+        <a href="painel.html"><svg class="i"><use href="assets/icons.svg?v=25#i-grid"/></svg>Dashboard</a>
+        <a href="promocoes.html" data-nav="lista"><svg class="i"><use href="assets/icons.svg?v=25#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
+        <a href="promocao.html" data-nav="nova"><svg class="i"><use href="assets/icons.svg?v=25#i-plus-circle"/></svg>Nova Promoção</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=25#i-network"/></svg>Afiliados</a>
+        <a href="#" data-demo><svg class="i"><use href="assets/icons.svg?v=25#i-gear"/></svg>Configurações</a>
+      </nav>
+
+      <div class="sync">
+        <div class="sync__top">
+          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg?v=25#i-plane"/></svg></span>
+          <div><strong>TELEGRAM SYNC</strong><span>@goatdaspromocoes</span></div>
+          <i class="sync__dot"></i>
+        </div>
+        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg?v=25#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg?v=25#i-check-circle"/></svg></div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <!-- Topbar -->
+      <header class="top">
+        <nav class="crumbs" aria-label="Você está em">
+          <strong>Notificações</strong>
+        </nav>
+
+        <label class="search">
+          <svg class="i"><use href="assets/icons.svg?v=25#i-search"/></svg>
+          <input id="search" type="search" placeholder="Buscar promoções, cupons ou SKU" autocomplete="off">
+        </label>
+
+        <div class="top__right">
+          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=25#i-plus"/></svg><span>Nova Promoção</span></a>
+          <button class="bell" type="button" aria-label="Notificações"><svg class="i"><use href="assets/icons.svg?v=25#i-bell"/></svg></button>
+          <div class="user">
+            <button class="user__btn" type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
+              <span class="avatar-u" id="user-initial">?</span>
+              <span><span class="user__name" id="user-name">…</span><span class="user__role">…</span></span>
+              <svg class="i"><use href="assets/icons.svg?v=25#i-down"/></svg>
+            </button>
+            <div class="menu" id="user-menu" hidden>
+              <p id="user-email"></p>
+              <button type="button" id="logout">Sair</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <div class="head head--list">
+          <div>
+            <h1><span class="h1-ico"><svg class="i"><use href="assets/icons.svg?v=25#i-bell"/></svg></span>Histórico de Notificações <span class="chip chip--count" id="total-chip">— itens</span></h1>
+            <p class="sub">Todas as notificações do painel, das mais recentes às mais antigas.</p>
+          </div>
+          <div class="actions">
+            <button class="btn" type="button" id="mark-all"><svg class="i"><use href="assets/icons.svg?v=25#i-check-circle"/></svg>Marcar todas como lidas</button>
+          </div>
+        </div>
+
+        <section class="card filters" aria-label="Filtros">
+          <div class="filters__row">
+            <label class="fsearch">
+              <svg class="i"><use href="assets/icons.svg?v=25#i-search"/></svg>
+              <input id="q" type="search" placeholder="Buscar por título ou texto..." autocomplete="off">
+            </label>
+            <select class="f-input f-input--md" id="f-kind" aria-label="Tipo">
+              <option value="">Todos os tipos</option>
+              <option value="success">Sucesso</option>
+              <option value="telegram">Telegram</option>
+              <option value="error">Erro</option>
+              <option value="warning">Alerta</option>
+              <option value="info">Informação</option>
+              <option value="security">Segurança</option>
+              <option value="brand">Destaque</option>
+            </select>
+            <select class="f-input f-input--md" id="f-read" aria-label="Leitura">
+              <option value="">Lidas e não lidas</option>
+              <option value="unread">Só não lidas</option>
+              <option value="read">Só lidas</option>
+            </select>
+            <select class="f-input f-input--md" id="f-period" aria-label="Período">
+              <option value="">Todo o período</option>
+              <option value="24h">Últimas 24h</option>
+              <option value="7d">Últimos 7 dias</option>
+              <option value="30d">Últimos 30 dias</option>
+            </select>
+            <button class="btn btn--md" type="button" id="f-clear"><svg class="i"><use href="assets/icons.svg?v=25#i-x"/></svg>Limpar</button>
+          </div>
+        </section>
+
+        <div id="hist" class="hist" aria-live="polite"></div>
+
+        <div class="empty" id="hist-empty" hidden>
+          <svg class="i"><use href="assets/icons.svg?v=25#i-inbox"/></svg>
+          <h2>Nenhuma notificação encontrada</h2>
+          <p>Ajuste os filtros ou volte mais tarde.</p>
+        </div>
+
+        <div class="hist__foot">
+          <span id="range-text">Carregando…</span>
+          <button class="btn" type="button" id="load-more" hidden>Carregar mais</button>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="config.js?v=25"></script>
+  <script src="auth.js?v=25"></script>
+  <script src="shell.js?v=25"></script>
+  <script src="notify.js?v=25"></script>
+  <script src="notificacoes.js?v=25"></script>
+</body>
+</html>

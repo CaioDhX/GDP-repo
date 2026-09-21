@@ -832,3 +832,12 @@ textarea.f-input { height: auto; padding: 10px 12px; resize: vertical; line-heig
 
 @media (max-width: 1180px) { .stats-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .stats-row { grid-template-columns: minmax(0, 1fr); } .pager { margin-left: 0; } }
+
+/* ---------- Histórico de notificações (notificacoes.html) ---------- */
+.hist { margin-top: 16px; }
+.hist__day + .hist__day { margin-top: 18px; }
+.hist__title { margin: 0 0 8px 4px; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+.hist__card { overflow: hidden; }
+.hist__card .nitem { padding-right: 20px; }
+.hist__foot { display: flex; align-items: center; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 18px 0 8px; color: var(--muted); font-size: 12px; }
+.hist__foot [hidden] { display: none; }
