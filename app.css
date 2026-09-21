@@ -908,7 +908,7 @@ textarea.f-input { height: auto; padding: 10px 12px; resize: vertical; line-heig
 .btn--wipe:hover:not(:disabled) { border-color: transparent; background: #fdeaec; color: var(--red-dark); }
 
 /* ================= Central de Afiliados ================= */
-.af-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 16px; margin-top: 16px; align-items: start; }
+.af-grid { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; margin-top: 16px; align-items: start; }
 .af-side { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .af-sub { margin-top: 2px; color: var(--muted); font-size: 12px; font-weight: 500; }
 
@@ -957,5 +957,10 @@ textarea.f-input { height: auto; padding: 10px 12px; resize: vertical; line-heig
 .af-out__foot a { display: inline-flex; align-items: center; gap: 4px; color: var(--red-dark); font-weight: 700; }
 .af-out__foot .i { width: 12px; height: 12px; }
 
-@media (max-width: 1180px) { .af-grid { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 1240px) { .af-grid { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 560px) { .af-pair { grid-template-columns: minmax(0, 1fr); } .af-gen { flex-direction: column; } }
+.table--af th, .table--af td { padding-left: 12px; padding-right: 12px; }
+.table--af th:first-child, .table--af td:first-child { padding-left: 18px; }
+.table--af th:last-child, .table--af td:last-child { padding-right: 14px; }
+.table--af .af-store { min-width: 0; gap: 10px; }
+.table--af .acts .act { width: 28px; height: 28px; }

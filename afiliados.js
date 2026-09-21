@@ -24,7 +24,7 @@
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "i");
     var use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "assets/icons.svg?v=31#" + id);
+    use.setAttribute("href", "assets/icons.svg?v=32#" + id);
     svg.appendChild(use);
     return svg;
   }
@@ -37,7 +37,7 @@
     return null;
   }
   function slugify(text) {
-    var s = text.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
+    var s = text.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 40);
     return s || "loja";
   }
   function uniqueSlug(base) {
