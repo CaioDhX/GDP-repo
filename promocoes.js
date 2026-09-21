@@ -88,16 +88,19 @@
       if (!window.confirm(question)) return;
 
       bulkDelete.disabled = true;
-      client.from("deals").delete().in("id", ids).select("id").then(function (res) {
+      shell.deleteDeals(ids).then(function (res) {
         bulkDelete.disabled = false;
         if (res.error) {
           toast("Não foi possível excluir: " + res.error.message);
           return;
         }
-        var deleted = (res.data || []).length;
-        if (!deleted) toast("Nenhuma promoção foi excluída (sem permissão).");
-        else if (deleted < ids.length) toast(deleted + " de " + ids.length + " promoções excluídas.");
-        else toast(deleted === 1 ? "Promoção excluída." : deleted + " promoções excluídas.");
+        var deleted = res.deleted;
+        var text;
+        if (!deleted) text = "Nenhuma promoção foi excluída (sem permissão).";
+        else if (deleted < ids.length) text = deleted + " de " + ids.length + " promoções excluídas.";
+        else text = deleted === 1 ? "Promoção excluída." : deleted + " promoções excluídas.";
+        if (res.imagesLeft) text += " Mas " + (res.imagesLeft === 1 ? "uma foto não foi removida" : res.imagesLeft + " fotos não foram removidas") + " do armazenamento.";
+        toast(text);
         shell.refreshCount();
         load();
       });

@@ -414,9 +414,10 @@
   $("delete-btn").addEventListener("click", function () {
     var code = $("sys-id").textContent;
     if (!window.confirm("Excluir a promoção " + code + "? Esta ação não pode ser desfeita.")) return;
-    client.from("deals").delete().eq("id", dealId).select("id").then(function (res) {
+    shell.deleteDeals([dealId]).then(function (res) {
       if (res.error) { toast("Não foi possível excluir: " + res.error.message); return; }
-      if (!res.data || !res.data.length) { toast("Sem permissão para excluir esta promoção."); return; }
+      if (!res.deleted) { toast("Sem permissão para excluir esta promoção."); return; }
+      if (res.imagesLeft) toast("Promoção excluída, mas a foto não foi removida do armazenamento.");
       window.location.replace("promocoes.html");
     });
   });

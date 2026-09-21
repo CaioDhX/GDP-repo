@@ -99,5 +99,31 @@
     });
   });
 
-  window.GDP_SHELL = { client: client, ready: ready, profile: profile, toast: toast, refreshCount: refreshCount };
+  // ---------- Exclusão de promoções ----------
+  // Apaga as linhas de public.deals e, em seguida, as fotos delas no bucket deal-images.
+  // Só mexe em arquivos desse bucket (fotos externas ou de outros buckets são ignoradas).
+  var IMAGE_MARKER = "/storage/v1/object/public/deal-images/";
+
+  function imagePath(url) {
+    var i = (url || "").indexOf(IMAGE_MARKER);
+    if (i === -1) return null;
+    try { return decodeURIComponent(url.slice(i + IMAGE_MARKER.length).split("?")[0]); }
+    catch (e) { return null; }
+  }
+
+  // Resolve com { deleted, imagesLeft } ou { error }.
+  function deleteDeals(ids) {
+    return client.from("deals").delete().in("id", ids).select("id, image_url").then(function (res) {
+      if (res.error) return { error: res.error };
+      var rows = res.data || [];
+      var paths = rows.map(function (r) { return imagePath(r.image_url); }).filter(Boolean);
+      if (!paths.length) return { deleted: rows.length, imagesLeft: 0 };
+      return client.storage.from("deal-images").remove(paths).then(function (r2) {
+        var removed = r2.error ? 0 : (r2.data || []).length;
+        return { deleted: rows.length, imagesLeft: paths.length - removed };
+      });
+    });
+  }
+
+  window.GDP_SHELL = { client: client, ready: ready, profile: profile, toast: toast, refreshCount: refreshCount, deleteDeals: deleteDeals };
 })();
