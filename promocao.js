@@ -430,10 +430,18 @@
     });
   });
 
+  // Ao mexer num campo, some a mensagem de erro dele.
+  function clearFieldErr(el) {
+    var wrap = el.closest(".f, .box, .aff");
+    var msg = wrap && wrap.querySelector(".f-err");
+    if (msg) msg.textContent = "";
+  }
+
   Object.keys(F).forEach(function (key) {
     if (key === "image") return;
-    F[key].addEventListener("input", renderPreview);
-    F[key].addEventListener("change", renderPreview);
+    var handler = function () { clearFieldErr(F[key]); renderPreview(); };
+    F[key].addEventListener("input", handler);
+    F[key].addEventListener("change", handler);
   });
 
   // ---------- Início ----------
