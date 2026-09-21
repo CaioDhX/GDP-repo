@@ -22,9 +22,9 @@
     toggle.setAttribute("aria-label", show ? "Ocultar chave de segurança" : "Mostrar chave de segurança");
   });
 
-  // Quem já está logado vai direto para o painel.
+  // Quem já está logado vai direto para a lista de promoções.
   auth.client.auth.getSession().then(function (res) {
-    if (res.data && res.data.session) window.location.replace("painel.html");
+    if (res.data && res.data.session) window.location.replace("promocoes.html");
   });
 
   form.addEventListener("submit", function (event) {
@@ -49,7 +49,7 @@
           password.select();
           return;
         }
-        window.location.replace("painel.html");
+        window.location.replace("promocoes.html");
       })
       .catch(function (err) {
         showNote(auth.friendlyError(err));
