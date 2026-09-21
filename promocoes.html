@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.css?v=19">
+  <link rel="stylesheet" href="app.css?v=20">
 </head>
 <body class="gate">
   <div class="app">
@@ -70,14 +70,48 @@
       </header>
 
       <main class="content">
-        <div class="head">
+        <!-- Cabeçalho -->
+        <div class="head head--list">
           <div>
-            <p class="eyebrow">GERENCIAMENTO</p>
-            <h1>Promoções</h1>
+            <h1><span class="h1-ico"><svg class="i"><use href="assets/icons.svg#i-tag"/></svg></span>Promoções <span class="chip chip--count" id="total-chip">— itens</span></h1>
+            <p class="sub">Gerencie as ofertas cadastradas no GOAT das Promoções em tempo real.</p>
           </div>
           <div class="actions">
-            <select class="f-input f-input--sm" id="filter-status" aria-label="Filtrar por situação">
-              <option value="">Todas as situações</option>
+            <button class="btn" type="button" id="export-btn"><svg class="i"><use href="assets/icons.svg#i-download"/></svg>Exportar</button>
+            <button class="btn" type="button" data-demo><svg class="i"><use href="assets/icons.svg#i-sync"/></svg>Sincronizar Feed</button>
+          </div>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="stats-row">
+          <div class="stat">
+            <div><span class="label">Ativas agora</span><strong id="st-active">0</strong><small>Publicadas e dentro da validade</small></div>
+            <span class="stat__ico stat__ico--green"><svg class="i"><use href="assets/icons.svg#i-megaphone"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Prontas p/ disparo</span><strong id="st-ready">0</strong><small>Fila do bot</small></div>
+            <span class="stat__ico stat__ico--blue"><svg class="i"><use href="assets/icons.svg#i-bolt"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Rascunhos</span><strong id="st-draft">0</strong><small>Aguardando finalização</small></div>
+            <span class="stat__ico stat__ico--gray"><svg class="i"><use href="assets/icons.svg#i-pencil"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Cliques hoje</span><strong id="st-clicks">0</strong><small>Desde as 00:00</small></div>
+            <span class="stat__ico stat__ico--red"><svg class="i"><use href="assets/icons.svg#i-flame"/></svg></span>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <section class="card filters" aria-label="Filtros">
+          <div class="filters__row">
+            <label class="fsearch">
+              <svg class="i"><use href="assets/icons.svg#i-search"/></svg>
+              <input id="q" type="search" placeholder="Buscar produto por nome, ID ou palavra-chave..." autocomplete="off">
+            </label>
+            <select class="f-input f-input--md" id="f-store" aria-label="Loja"><option value="">Todas as lojas</option></select>
+            <select class="f-input f-input--md" id="f-status" aria-label="Situação">
+              <option value="">Todos os status</option>
               <option value="draft">Rascunho</option>
               <option value="ready">Pronta</option>
               <option value="queued">Na fila</option>
@@ -85,23 +119,44 @@
               <option value="expired">Expirada</option>
               <option value="failed">Falhou</option>
             </select>
+            <select class="f-input f-input--md" id="f-period" aria-label="Período">
+              <option value="">Todo o período</option>
+              <option value="24h">Últimas 24h</option>
+              <option value="7d">Últimos 7 dias</option>
+              <option value="30d">Últimos 30 dias</option>
+            </select>
+            <button class="btn btn--md" type="button" id="f-clear"><svg class="i"><use href="assets/icons.svg#i-x"/></svg>Limpar</button>
           </div>
-        </div>
+          <div class="filters__meta">
+            <div class="chips" id="chips"></div>
+            <label class="sort">Ordenação:
+              <select id="f-sort" aria-label="Ordenação">
+                <option value="recent">Mais recentes</option>
+                <option value="old">Mais antigas</option>
+                <option value="discount">Maior desconto</option>
+                <option value="price">Menor preço</option>
+              </select>
+            </label>
+          </div>
+        </section>
 
+        <!-- Tabela -->
         <section class="card list">
-          <div class="list__tools">
-            <span class="list__count" id="list-count">Carregando…</span>
-            <div class="bulk" id="bulk" hidden>
-              <strong id="bulk-count"></strong>
-              <button class="btn btn--del" type="button" id="bulk-delete"><svg class="i"><use href="assets/icons.svg#i-trash"/></svg><span>Excluir</span></button>
-              <button class="link-btn" type="button" id="bulk-clear">Limpar seleção</button>
-            </div>
-          </div>
-
           <div class="table-wrap">
-            <table class="table">
+            <table class="table table--deals">
               <thead>
-                <tr><th class="sel"><input type="checkbox" id="select-all" aria-label="Selecionar todas as promoções"></th><th>Promoção</th><th>Loja</th><th class="num">Preço</th><th class="num">Desconto</th><th>Situação</th><th>Criada em</th></tr>
+                <tr>
+                  <th class="sel"><input type="checkbox" id="select-all" aria-label="Selecionar todas as promoções desta página"></th>
+                  <th>Mídia</th>
+                  <th>Produto</th>
+                  <th>Loja</th>
+                  <th class="num">Preço original</th>
+                  <th class="num">Preço oferta</th>
+                  <th class="ctr">Desconto</th>
+                  <th>Status</th>
+                  <th>Criado em</th>
+                  <th class="ctr">Ações</th>
+                </tr>
               </thead>
               <tbody id="rows"></tbody>
             </table>
@@ -113,6 +168,19 @@
             <p id="empty-text">Cadastre a primeira para ela aparecer aqui.</p>
             <a class="btn btn--primary" href="promocao.html"><svg class="i"><use href="assets/icons.svg#i-plus"/></svg><span>Nova Promoção</span></a>
           </div>
+
+          <div class="list__foot">
+            <div class="bulk" id="bulk" hidden>
+              <strong id="bulk-count"></strong>
+              <button class="btn btn--ok" type="button" id="bulk-ready"><svg class="i"><use href="assets/icons.svg#i-check-circle"/></svg><span>Marcar como Pronta</span></button>
+              <button class="btn btn--del" type="button" id="bulk-delete"><svg class="i"><use href="assets/icons.svg#i-trash"/></svg><span>Excluir</span></button>
+              <button class="link-btn" type="button" id="bulk-clear">Limpar seleção</button>
+            </div>
+            <div class="pager">
+              <span id="range-text">Carregando…</span>
+              <div class="pages" id="pages"></div>
+            </div>
+          </div>
         </section>
       </main>
     </div>
@@ -121,9 +189,9 @@
   <p class="toast" id="toast" role="status" hidden></p>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="config.js?v=19"></script>
-  <script src="auth.js?v=19"></script>
-  <script src="shell.js?v=19"></script>
-  <script src="promocoes.js?v=19"></script>
+  <script src="config.js?v=20"></script>
+  <script src="auth.js?v=20"></script>
+  <script src="shell.js?v=20"></script>
+  <script src="promocoes.js?v=20"></script>
 </body>
 </html>
