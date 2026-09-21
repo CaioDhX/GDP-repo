@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GOAT das Promoções — Login</title>
+  <meta name="description" content="Painel de gerenciamento de promoções e canais da GOAT das Promoções.">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.7 7.1 5.6 11.8c-.8.3-.8.8-.1 1l3 .9 1.2 3.7c.1.4.3.5.6.5.3 0 .4-.1.6-.3l1.7-1.6 3.1 2.3c.6.3 1 .2 1.2-.5l2-9.5c.2-.9-.3-1.3-1.2-.9Zm-8 5.5 6.6-4.2c.3-.2.6-.1.4.1l-5.3 4.9-.2 2.2-1.5-3Z" fill-rule="evenodd"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/></symbol>
+  </svg>
+
+  <main class="shell">
+    <!-- Painel de login -->
+    <section class="login">
+      <header class="brand">
+        <div class="brand__id">
+          <img class="brand__logo" src="assets/logo.png" alt="Logo GOAT das Promoções" width="48" height="52">
+          <div>
+            <strong class="brand__name">GOAT</strong>
+            <span class="brand__sub">das Promoções</span>
+          </div>
+        </div>
+        <span class="status-pill"><i class="dot" aria-hidden="true"></i>BOT V2.4 ONLINE</span>
+      </header>
+
+      <div class="login__body">
+        <h1>Bem-vindo de volta</h1>
+        <p class="lead">Entre na sua conta para gerenciar suas promoções e canais.</p>
+
+        <div class="tip" role="status">
+          <svg class="icon icon--red" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 4 5.5v6c0 4.6 3.3 8.3 8 10 4.7-1.7 8-5.4 8-10v-6l-8-3Z"/><path d="m8.6 12 2.4 2.4 4.4-4.6"/></svg>
+          <p><strong>Dica operacional:</strong> Conectado com sucesso à Telegram Bot API.</p>
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="email">E-mail profissional</label>
+            <div class="input">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>
+              <input id="email" name="email" type="email" autocomplete="username" placeholder="voce@empresa.com.br" required>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="field__row">
+              <label for="password">Chave de segurança</label>
+              <a class="link-red" href="#" data-demo>Esqueceu o acesso?</a>
+            </div>
+            <div class="input">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
+              <input id="password" name="password" type="password" autocomplete="current-password" placeholder="••••••••••••" required>
+              <button class="input__toggle" type="button" id="toggle-password" aria-label="Mostrar chave de segurança" aria-pressed="false">
+                <svg class="icon icon--eye" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg class="icon icon--eye-off" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.6A10 10 0 0 1 12 5.5c6.4 0 10 6.5 10 6.5a17 17 0 0 1-3.2 4"/><path d="M6.5 7.2C3.7 8.9 2 12 2 12s3.6 6.5 10 6.5c1.5 0 2.8-.3 4-.9"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="options">
+            <label class="check">
+              <input type="checkbox" name="remember" checked>
+              <span class="check__box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span>
+              Manter conectado por 30 dias
+            </label>
+            <span class="restricted"><i class="dot dot--gray" aria-hidden="true"></i>IP restrito</span>
+          </div>
+
+          <button class="btn-login" type="submit">
+            Entrar no Painel
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"/><path d="M10 8l4 4-4 4"/><path d="M14 12H4"/></svg>
+          </button>
+          <p class="form-note" id="form-note" role="status" hidden></p>
+        </form>
+      </div>
+
+      <footer class="login__foot">
+        <span class="tls">
+          <svg class="icon icon--green" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></svg>
+          Criptografia TLS v1.3 Ativa
+        </span>
+        <nav aria-label="Links legais">
+          <a href="#" data-demo>Termos</a><i aria-hidden="true">•</i><a href="#" data-demo>Segurança</a><i aria-hidden="true">•</i><a href="#" data-demo>Suporte</a>
+        </nav>
+      </footer>
+    </section>
+
+    <!-- Painel institucional -->
+    <aside class="showcase" aria-label="Sobre o canal">
+      <div class="showcase__top">
+        <span class="channel-pill">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#229ED9"/><use href="#i-plane" fill="#fff"/></svg>
+          Canal VIP Telegram Broadcast
+        </span>
+
+        <h2>Alta frequência. Curadoria cirúrgica.</h2>
+        <p class="showcase__lead">A infraestrutura automatizada que conecta centenas de milhares de compradores aos menores preços da web brasileira.</p>
+
+        <article class="msg" aria-label="Exemplo de mensagem do bot">
+          <header class="msg__head">
+            <img src="assets/logo.png" alt="" width="40" height="40">
+            <div>
+              <strong>GOAT Promos Bot
+                <svg class="verified" viewBox="0 0 24 24" aria-label="Verificado"><path d="M12 2.5 14.3 4l2.7-.1 1 2.5 2.4 1.3-.3 2.7L21.5 12l-1.4 2.2.3 2.7-2.4 1.3-1 2.5-2.7-.1L12 21.5 9.7 20l-2.7.1-1-2.5-2.4-1.3.3-2.7L2.5 12l1.4-2.2-.3-2.7L6 5.8l1-2.5L9.7 4 12 2.5Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.6 12 2.4 2.4 4.4-4.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </strong>
+              <span>via Broadcast Engine</span>
+            </div>
+            <time>Agora</time>
+          </header>
+
+          <div class="offer">
+            <div class="offer__top">
+              <span class="tag-hot">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-flame"/></svg>
+                OFERTA HISTÓRICA
+              </span>
+              <span class="off">-44% OFF</span>
+            </div>
+            <p class="offer__title">Smart TV 55" 4K UHD OLED 120Hz Dolby Vision</p>
+            <p class="offer__price"><s>De: R$ 4.899</s> <strong>Por: R$ 2.743</strong></p>
+            <a class="offer__cta" href="#" data-demo>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-plane"/></svg>
+              Pegar Promoção no Bot
+              <svg class="ext" viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>
+            </a>
+          </div>
+
+          <footer class="msg__foot">
+            <span>Canal #goat-alertas</span>
+            <span class="msg__time">14:48
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m1.500 12.500 4.500 4.500L14 8"/><path d="m9 15 1.500 1.500L19 8"/></svg>
+            </span>
+          </footer>
+        </article>
+
+        <ul class="stats">
+          <li><strong>14.280+</strong><span>MEMBROS</span></li>
+          <li><strong>420</strong><span>DISPAROS/MÊS</span></li>
+          <li><strong class="ok">99.9%</strong><span>UPTIME BOT</span></li>
+        </ul>
+      </div>
+
+      <footer class="showcase__foot">
+        <span>Gateway Telegram Oficial 256-bit</span>
+        <span>SAAS V2.4</span>
+      </footer>
+    </aside>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
