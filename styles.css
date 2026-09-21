@@ -47,15 +47,6 @@ img { display: block; }
 }
 .icon--red { color: var(--red); }
 
-.dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #0a7a45;
-}
-.dot--gray { background: #c2c5d1; }
-
 /* ---------- Cartão principal ---------- */
 .shell {
   width: 100%;
@@ -207,15 +198,6 @@ label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
 .check input:checked + .check__box { background: #2a2d3a; border-color: #2a2d3a; }
 .check input:checked + .check__box svg { opacity: 1; }
 .check input:focus-visible + .check__box { outline: 2px solid var(--red); outline-offset: 2px; }
-
-.restricted {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 700;
-}
 
 .btn-login {
   display: flex;
