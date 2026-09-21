@@ -84,10 +84,12 @@ img { display: block; }
   justify-content: space-between;
   gap: 12px;
 }
-.brand__id { display: flex; align-items: center; gap: 12px; }
-.brand__logo { width: 48px; height: auto; }
-.brand__name { display: block; font-size: 16px; font-weight: 800; line-height: 1.1; }
-.brand__sub { display: block; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .02em; }
+.brand__logo {
+  width: 132px;
+  height: auto;
+  margin: -10px 0 -10px -10px;
+  mix-blend-mode: multiply; /* funde o fundo off-white do arquivo com o cartão branco */
+}
 
 .status-pill {
   display: inline-flex;
@@ -103,7 +105,7 @@ img { display: block; }
   white-space: nowrap;
 }
 
-.login__body { margin-top: 36px; flex: 1; }
+.login__body { margin-top: 20px; flex: 1; }
 
 h1 {
   font-size: 34px;
@@ -325,12 +327,21 @@ label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
   border: 1px solid rgba(255, 255, 255, .06);
 }
 .msg__head { display: flex; align-items: center; gap: 10px; }
-.msg__head img {
+.avatar {
+  flex: none;
   width: 40px;
   height: 40px;
+  overflow: hidden;
   border-radius: 50%;
   background: #fff;
-  object-fit: contain;
+}
+/* amplia o logo para enquadrar só a cabeça do bode no avatar */
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.75) translateY(6%);
+  transform-origin: 50% 32%;
 }
 .msg__head strong { display: flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700; }
 .msg__head span { display: block; color: #a9aec6; font-size: 11px; font-weight: 600; }
