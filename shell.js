@@ -7,10 +7,14 @@
   function toLogin() { window.location.replace("index.html"); return never; }
 
   // ---------- Avisos ----------
+  // Com notify.js carregado, vira o toast estilizado (aceita texto ou { kind, title, body, actions }).
+  // Sem ele, cai no aviso simples de rodapé (#toast), se a página tiver um.
   var toastEl = document.getElementById("toast");
   var toastTimer;
-  function toast(text) {
-    toastEl.textContent = text;
+  function toast(opts) {
+    if (window.GDP_NOTIFY) return window.GDP_NOTIFY.toast(opts);
+    if (!toastEl) return;
+    toastEl.textContent = typeof opts === "string" ? opts : (opts && opts.title) || "";
     toastEl.hidden = false;
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function () { toastEl.hidden = true; }, 3200);
