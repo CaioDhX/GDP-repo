@@ -6,7 +6,7 @@
   var shell = window.GDP_SHELL;
   var client = shell.client;
 
-  var ICONS_URL = "assets/icons.svg?v=24";
+  var ICONS_URL = "assets/icons.svg?v=25";
   var TOAST_MS = 6000;
   var FEED_LIMIT = 20;
   var DISMISS_KEY = "gdp-banner-dismiss:";
@@ -255,12 +255,7 @@
     menu.appendChild(emptyEl);
 
     var foot = el("a", "notif__foot", "Acessar Histórico Completo de Notificações");
-    foot.href = "#";
-    foot.addEventListener("click", function (event) {
-      event.preventDefault();
-      setOpen(false);
-      toast({ kind: "info", title: "Histórico completo", body: "A tela de histórico ainda não foi implementada." });
-    });
+    foot.href = "notificacoes.html";
     menu.appendChild(foot);
 
     bell.parentNode.insertBefore(menu, bell.nextSibling);
@@ -347,10 +342,10 @@
   }
 
   function markRead(id) {
+    if (!userId) return;
     var n = items.filter(function (x) { return x.id === id; })[0];
-    if (!n || n.is_read || !userId) return;
-    n.is_read = true;
-    render();
+    if (n && n.is_read) return;
+    if (n) { n.is_read = true; render(); }
     client.from("notification_reads").upsert({ notification_id: id, user_id: userId }, { onConflict: "notification_id,user_id", ignoreDuplicates: true }).then(function () {});
   }
 
@@ -431,5 +426,9 @@
     });
   }
 
-  window.GDP_NOTIFY = { toast: toast, banner: banner, publish: publish, markRead: markRead, markAllRead: markAllRead, reload: load };
+  window.GDP_NOTIFY = {
+    toast: toast, banner: banner, publish: publish, markRead: markRead, markAllRead: markAllRead, reload: load,
+    // Usado pela página de histórico (notificacoes.js).
+    util: { el: el, icon: icon, richText: richText, kindIcon: kindIcon, actionEl: actionEl, kindOf: kindOf, safeInternalHref: safeInternalHref }
+  };
 })();
