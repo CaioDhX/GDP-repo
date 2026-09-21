@@ -49,11 +49,25 @@ create policy notifications_select on public.notifications
   for select to authenticated
   using (user_id is null or user_id = auth.uid());
 
--- Qualquer usuário logado do painel pode emitir (o bot usa a service_role e ignora RLS).
+-- Emitir: só admin e editor (viewer não). Notificação global (user_id nulo) só admin.
+-- O bot usa a service_role e ignora RLS; os triggers abaixo são security definer.
 drop policy if exists notifications_insert on public.notifications;
 create policy notifications_insert on public.notifications
   for insert to authenticated
-  with check (created_by is null or created_by = auth.uid());
+  with check (
+    (created_by is null or created_by = auth.uid())
+    and (
+      exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'admin')
+      or (user_id is not null
+          and exists (select 1 from public.profiles p where p.id = auth.uid() and p.role = 'editor'))
+    )
+  );
+
+-- Defesa em profundidade: o painel só aceita links http(s) ou relativos, mas o banco também
+-- recusa esquemas perigosos dentro de meta.
+alter table public.notifications drop constraint if exists notifications_meta_safe;
+alter table public.notifications add constraint notifications_meta_safe
+  check (meta::text !~* '(javascript|vbscript)\s*:|data\s*:\s*text/html');
 
 -- Só administradores apagam notificações.
 drop policy if exists notifications_delete on public.notifications;
@@ -125,7 +139,7 @@ begin
     select p.full_name into v_author from public.profiles p where p.id = new.created_by;
     v_kind  := 'success';
     v_title := 'Nova promoção cadastrada';
-    v_body  := '**' || new.title || '** (' || coalesce(v_store, 'sem loja') || ') foi cadastrada por ' || coalesce(v_author, 'um usuário') || '.';
+    v_body  := '**' || left(new.title, 200) || '** (' || left(coalesce(v_store, 'sem loja'), 60) || ') foi cadastrada por ' || left(coalesce(v_author, 'um usuário'), 60) || '.';
     v_meta  := v_meta || jsonb_build_object('actions', jsonb_build_array(
                  jsonb_build_object('label', 'Abrir promoção', 'href', 'promocao.html?id=' || new.id::text, 'style', 'link')));
 
@@ -133,23 +147,23 @@ begin
     if new.status = 'published' then
       v_kind  := 'telegram';
       v_title := 'Oferta Disparada com Sucesso!';
-      v_body  := '**' || new.title || '** foi publicada no Telegram e o link afiliado foi gerado.';
+      v_body  := '**' || left(new.title, 200) || '** foi publicada no Telegram e o link afiliado foi gerado.';
       v_meta  := v_meta || jsonb_build_object('actions', jsonb_build_array(
                    jsonb_build_object('label', 'Visualizar post', 'href', 'promocao.html?id=' || new.id::text, 'style', 'link')));
     elsif new.status = 'failed' then
       v_kind  := 'error';
       v_title := 'Falha ao publicar oferta';
-      v_body  := 'O bot não conseguiu publicar **' || new.title || '**. Revise o link e tente novamente.';
+      v_body  := 'O bot não conseguiu publicar **' || left(new.title, 200) || '**. Revise o link e tente novamente.';
       v_meta  := v_meta || jsonb_build_object('actions', jsonb_build_array(
                    jsonb_build_object('label', 'Revisar oferta', 'href', 'promocao.html?id=' || new.id::text, 'style', 'pill')));
     elsif new.status = 'expired' then
       v_kind  := 'warning';
       v_title := 'Oferta expirada';
-      v_body  := '**' || new.title || '** saiu do ar por ter passado da validade.';
+      v_body  := '**' || left(new.title, 200) || '** saiu do ar por ter passado da validade.';
     elsif new.status = 'ready' then
       v_kind  := 'info';
       v_title := 'Promoção pronta para disparo';
-      v_body  := '**' || new.title || '** entrou na fila do bot.';
+      v_body  := '**' || left(new.title, 200) || '** entrou na fila do bot.';
     else
       return new;
     end if;
@@ -157,8 +171,13 @@ begin
     return new;
   end if;
 
-  insert into public.notifications (kind, surface, title, body, meta, created_by)
-  values (v_kind, case when new.status = 'ready' then 'list' else 'toast' end, v_title, v_body, v_meta, auth.uid());
+  -- Notificar é secundário: se falhar, o cadastro/edição da promoção não pode falhar junto.
+  begin
+    insert into public.notifications (kind, surface, title, body, meta, created_by)
+    values (v_kind, case when new.status = 'ready' then 'list' else 'toast' end, v_title, v_body, v_meta, auth.uid());
+  exception when others then
+    raise warning 'deals_notify: notificação não criada (%)', sqlerrm;
+  end;
   return new;
 end $$;
 

@@ -38,6 +38,25 @@
     return svg;
   }
   function isHttp(url) { return /^https?:\/\//i.test(url || ""); }
+
+  // Os links e ícones das notificações vêm do banco (meta jsonb), então nunca são confiáveis.
+  // Só passam http(s) e caminhos relativos simples (ex.: promocao.html?id=…); qualquer outro
+  // esquema (javascript:, data:, //host…) é descartado.
+  function safeHref(url) {
+    if (typeof url !== "string") return null;
+    url = url.trim();
+    if (isHttp(url)) return url;
+    if (/^[a-z0-9_\-.\/]+(\?[^\s:]*)?(#\S*)?$/i.test(url) && url.indexOf("//") !== 0) return url;
+    return null;
+  }
+  // Navegação automática (clique na notificação): só dentro do próprio painel.
+  function safeInternalHref(url) {
+    var h = safeHref(url);
+    return h && !isHttp(h) ? h : null;
+  }
+  var ACTION_STYLES = ["link", "pill", "muted", "primary", "outline", "ghost"];
+  function safeStyle(style) { return ACTION_STYLES.indexOf(style) !== -1 ? style : "link"; }
+  function safeIconId(id) { return typeof id === "string" && /^[a-z0-9-]+$/i.test(id) ? id : null; }
   function kindOf(n) { return KINDS[n.kind] ? n.kind : "info"; }
 
   // "há 2m", "há 5h", "ontem"…
@@ -65,22 +84,25 @@
   function kindIcon(n, className) {
     var k = KINDS[kindOf(n)];
     var wrap = el("span", className + " k-" + kindOf(n));
-    wrap.appendChild(icon(n.icon || k.icon, n.icon ? false : k.fill));
+    var custom = safeIconId(n.icon);
+    wrap.appendChild(icon(custom || k.icon, custom ? false : k.fill));
     return wrap;
   }
 
   // Ação: { label, href?, onClick?, style? } — style: link | pill | muted | primary | outline | ghost.
   function actionEl(a, close) {
     var node;
-    if (a.href) {
-      node = el("a", "ntf__act ntf__act--" + (a.style || "link"), a.label);
-      node.href = a.href;
-      if (isHttp(a.href)) { node.target = "_blank"; node.rel = "noopener noreferrer"; }
+    var href = a.href ? safeHref(a.href) : null;
+    var style = safeStyle(a.style);
+    if (href) {
+      node = el("a", "ntf__act ntf__act--" + style, a.label);
+      node.href = href;
+      if (isHttp(href)) { node.target = "_blank"; node.rel = "noopener noreferrer"; }
     } else {
-      node = el("button", "ntf__act ntf__act--" + (a.style || "link"), a.label);
+      node = el("button", "ntf__act ntf__act--" + style, a.label);
       node.type = "button";
     }
-    if (a.icon) node.appendChild(icon(a.icon));
+    if (safeIconId(a.icon)) node.appendChild(icon(a.icon));
     node.addEventListener("click", function (event) {
       event.stopPropagation();
       if (typeof a.onClick === "function") a.onClick(event);
@@ -294,7 +316,7 @@
 
     function open() {
       markRead(n.id);
-      var href = meta.href || (meta.deal_id ? "promocao.html?id=" + encodeURIComponent(meta.deal_id) : null);
+      var href = safeInternalHref(meta.href) || (meta.deal_id ? "promocao.html?id=" + encodeURIComponent(meta.deal_id) : null);
       if (href) window.location.href = href;
     }
     row.addEventListener("click", open);
