@@ -168,16 +168,66 @@
     });
   }
 
-  function clearFilters() {
-    qEl.value = ""; kindEl.value = ""; readEl.value = ""; periodEl.value = "";
-    reload();
+  // "Limpar" apaga de vez todas as notificações que o usuário enxerga (as gerais e as dele).
+  // O banco só deixa administradores apagarem (RLS); avisamos antes de perguntar.
+  var clearBtn = $("f-clear");
+
+  function clearAll() {
+    if (!userId || clearBtn.disabled) return;
+    shell.profile.then(function (profile) {
+      if (profile.role !== "admin") {
+        shell.toast({ kind: "error", title: "Sem permissão", body: "Só administradores podem apagar notificações." });
+        return;
+      }
+      clearBtn.disabled = true;
+      client.from("notification_feed").select("id", { count: "exact", head: true }).then(function (res) {
+        clearBtn.disabled = false;
+        if (res.error) {
+          shell.toast({ kind: "error", title: "Não foi possível apagar", body: "Não deu para contar as notificações. Tente novamente." });
+          return;
+        }
+        var n = res.count || 0;
+        if (!n) {
+          shell.toast({ kind: "info", title: "Nada para apagar", body: "Não há notificações." });
+          return;
+        }
+        return shell.confirm({
+          title: "Apagar todas as notificações?",
+          body: n + (n === 1 ? " notificação será apagada" : " notificações serão apagadas") +
+            " de forma permanente. As gerais somem para todos os usuários. Esta ação não pode ser desfeita.",
+          confirmLabel: "Apagar tudo",
+          cancelLabel: "Cancelar",
+          danger: true
+        }).then(function (ok) {
+          if (!ok) return;
+          clearBtn.disabled = true;
+          return client.from("notifications").delete({ count: "exact" })
+            .or("user_id.is.null,user_id.eq." + userId)
+            .then(function (r2) {
+              clearBtn.disabled = false;
+              if (r2.error) {
+                shell.toast({ kind: "error", title: "Não foi possível apagar", body: "Tente novamente em instantes." });
+                return;
+              }
+              var deleted = r2.count || 0;
+              if (!deleted) {
+                shell.toast({ kind: "error", title: "Nada foi apagado", body: "O banco recusou a exclusão (sem permissão)." });
+                return;
+              }
+              shell.toast({ kind: "success", title: "Notificações apagadas", body: deleted + (deleted === 1 ? " notificação removida." : " notificações removidas.") });
+              window.GDP_NOTIFY.reload();
+              reload();
+            });
+        });
+      });
+    });
   }
 
   // ---------- Eventos ----------
   var timer;
   qEl.addEventListener("input", function () { clearTimeout(timer); timer = setTimeout(reload, 300); });
   [kindEl, readEl, periodEl].forEach(function (s) { s.addEventListener("change", reload); });
-  $("f-clear").addEventListener("click", clearFilters);
+  clearBtn.addEventListener("click", clearAll);
   moreBtn.addEventListener("click", function () { fetchPage(false); });
   markAllBtn.addEventListener("click", markAll);
 

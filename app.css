@@ -903,3 +903,6 @@ textarea.f-input { height: auto; padding: 10px 12px; resize: vertical; line-heig
 .f-hint { display: block; margin-top: 6px; color: var(--faint); font-size: 11px; }
 .photo__ratio { position: absolute; right: 8px; bottom: 8px; padding: 3px 8px; border-radius: 6px; background: rgba(15, 21, 38, .72); color: #fff; font-size: 12px; font-weight: 800; letter-spacing: .02em; pointer-events: none; }
 .photo__ratio[hidden] { display: none; }
+
+/* Botão "Limpar" do histórico de notificações: apaga tudo, então avisa com o vermelho ao passar o mouse */
+.btn--wipe:hover:not(:disabled) { border-color: transparent; background: #fdeaec; color: var(--red-dark); }
