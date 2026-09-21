@@ -137,18 +137,27 @@
   var side = document.querySelector(".side");
   var topbar = document.querySelector(".top");
   if (side && topbar) {
-    var toggle = document.createElement("button");
-    toggle.type = "button";
-    toggle.className = "side-toggle";
-    var bars = document.createElementNS(SVG_NS, "svg");
-    bars.setAttribute("viewBox", "0 0 24 24");
-    bars.setAttribute("class", "i");
-    bars.setAttribute("aria-hidden", "true");
-    var path = document.createElementNS(SVG_NS, "path");
-    path.setAttribute("d", "M4 7h16M4 12h16M4 17h16");
-    bars.appendChild(path);
-    toggle.appendChild(bars);
+    function makeToggle(className) {
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = className;
+      var bars = document.createElementNS(SVG_NS, "svg");
+      bars.setAttribute("viewBox", "0 0 24 24");
+      bars.setAttribute("class", "i");
+      bars.setAttribute("aria-hidden", "true");
+      var path = document.createElementNS(SVG_NS, "path");
+      path.setAttribute("d", "M4 7h16M4 12h16M4 17h16");
+      bars.appendChild(path);
+      btn.appendChild(bars);
+      return btn;
+    }
+    // Botão do topo (menu aberto) e botão no lugar do logo (menu recolhido).
+    var toggle = makeToggle("side-toggle");
     topbar.insertBefore(toggle, topbar.firstChild);
+    var brand = side.querySelector(".side__brand");
+    var brandToggle = makeToggle("side-toggle side-toggle--brand");
+    if (brand) brand.insertBefore(brandToggle, brand.firstChild);
+    var toggles = [toggle, brandToggle];
 
     var backdrop = document.createElement("div");
     backdrop.className = "side-backdrop";
@@ -161,14 +170,16 @@
 
     function syncToggle() {
       var open = mobileMq.matches ? document.body.classList.contains("side-open") : !document.body.classList.contains("side-collapsed");
-      toggle.setAttribute("aria-expanded", String(open));
-      toggle.setAttribute("aria-label", open ? "Recolher menu" : "Abrir menu");
-      toggle.setAttribute("title", open ? "Recolher menu" : "Abrir menu");
+      toggles.forEach(function (btn) {
+        btn.setAttribute("aria-expanded", String(open));
+        btn.setAttribute("aria-label", open ? "Recolher menu" : "Abrir menu");
+        btn.setAttribute("title", open ? "Recolher menu" : "Abrir menu");
+      });
     }
     document.body.classList.toggle("side-collapsed", sideStored());
     syncToggle();
 
-    toggle.addEventListener("click", function () {
+    function onToggle() {
       if (mobileMq.matches) {
         document.body.classList.toggle("side-open");
       } else {
@@ -176,7 +187,8 @@
         sideStore(collapsed);
       }
       syncToggle();
-    });
+    }
+    toggles.forEach(function (btn) { btn.addEventListener("click", onToggle); });
     backdrop.addEventListener("click", function () { document.body.classList.remove("side-open"); syncToggle(); });
     side.addEventListener("click", function (event) {
       if (mobileMq.matches && event.target.closest && event.target.closest("a")) document.body.classList.remove("side-open");
@@ -213,7 +225,7 @@
       var svg = document.createElementNS(SVG_NS, "svg");
       svg.setAttribute("class", "i");
       var use = document.createElementNS(SVG_NS, "use");
-      use.setAttribute("href", "assets/icons.svg?v=27#" + (danger ? "i-trash" : "i-info"));
+      use.setAttribute("href", "assets/icons.svg?v=28#" + (danger ? "i-trash" : "i-info"));
       svg.appendChild(use);
       ico.appendChild(svg);
       dlg.appendChild(ico);
