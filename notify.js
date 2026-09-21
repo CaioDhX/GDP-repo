@@ -6,7 +6,7 @@
   var shell = window.GDP_SHELL;
   var client = shell.client;
 
-  var ICONS_URL = "assets/icons.svg?v=25";
+  var ICONS_URL = "assets/icons.svg?v=26";
   var TOAST_MS = 6000;
   var FEED_LIMIT = 20;
   var DISMISS_KEY = "gdp-banner-dismiss:";

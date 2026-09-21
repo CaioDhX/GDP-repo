@@ -145,22 +145,27 @@
         return;
       }
       var one = current.filter(function (d) { return d.id === ids[0]; })[0];
-      var question = ids.length === 1 && one
-        ? 'Excluir a promoção "' + one.title + '" (' + one.public_code + ")? Esta ação não pode ser desfeita."
-        : "Excluir " + ids.length + " promoções? Esta ação não pode ser desfeita.";
-      if (!window.confirm(question)) return;
-
-      $("bulk-delete").disabled = true;
-      shell.deleteDeals(ids).then(function (res) {
-        $("bulk-delete").disabled = false;
-        if (res.error) { toast("Não foi possível excluir: " + res.error.message); return; }
-        var deleted = res.deleted, text;
-        if (!deleted) text = "Nenhuma promoção foi excluída (sem permissão).";
-        else if (deleted < ids.length) text = deleted + " de " + ids.length + " promoções excluídas.";
-        else text = deleted === 1 ? "Promoção excluída." : deleted + " promoções excluídas.";
-        if (res.imagesLeft) text += " Mas " + (res.imagesLeft === 1 ? "uma foto não foi removida" : res.imagesLeft + " fotos não foram removidas") + " do armazenamento.";
-        toast(text);
-        afterChange();
+      var single = ids.length === 1 && one;
+      shell.confirm({
+        title: single ? "Excluir promoção?" : "Excluir " + ids.length + " promoções?",
+        name: single ? one.title + " (" + one.public_code + ")" : null,
+        body: "Esta ação não pode ser desfeita.",
+        confirmLabel: single ? "Excluir" : "Excluir " + ids.length,
+        danger: true
+      }).then(function (ok) {
+        if (!ok) return;
+        $("bulk-delete").disabled = true;
+        return shell.deleteDeals(ids).then(function (res) {
+          $("bulk-delete").disabled = false;
+          if (res.error) { toast("Não foi possível excluir: " + res.error.message); return; }
+          var deleted = res.deleted, text;
+          if (!deleted) text = "Nenhuma promoção foi excluída (sem permissão).";
+          else if (deleted < ids.length) text = deleted + " de " + ids.length + " promoções excluídas.";
+          else text = deleted === 1 ? "Promoção excluída." : deleted + " promoções excluídas.";
+          if (res.imagesLeft) text += " Mas " + (res.imagesLeft === 1 ? "uma foto não foi removida" : res.imagesLeft + " fotos não foram removidas") + " do armazenamento.";
+          toast(text);
+          afterChange();
+        });
       });
     });
   }

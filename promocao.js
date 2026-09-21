@@ -413,12 +413,20 @@
   // ---------- Excluir (só administrador, o banco também exige) ----------
   $("delete-btn").addEventListener("click", function () {
     var code = $("sys-id").textContent;
-    if (!window.confirm("Excluir a promoção " + code + "? Esta ação não pode ser desfeita.")) return;
-    shell.deleteDeals([dealId]).then(function (res) {
-      if (res.error) { toast("Não foi possível excluir: " + res.error.message); return; }
-      if (!res.deleted) { toast("Sem permissão para excluir esta promoção."); return; }
-      if (res.imagesLeft) toast("Promoção excluída, mas a foto não foi removida do armazenamento.");
-      window.location.replace("promocoes.html");
+    shell.confirm({
+      title: "Excluir promoção?",
+      name: code,
+      body: "Esta ação não pode ser desfeita.",
+      confirmLabel: "Excluir",
+      danger: true
+    }).then(function (ok) {
+      if (!ok) return;
+      return shell.deleteDeals([dealId]).then(function (res) {
+        if (res.error) { toast("Não foi possível excluir: " + res.error.message); return; }
+        if (!res.deleted) { toast("Sem permissão para excluir esta promoção."); return; }
+        if (res.imagesLeft) toast("Promoção excluída, mas a foto não foi removida do armazenamento.");
+        window.location.replace("promocoes.html");
+      });
     });
   });
 
