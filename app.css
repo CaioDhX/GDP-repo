@@ -197,7 +197,6 @@ img { display: block; max-width: 100%; }
 }
 .search input { flex: 1; min-width: 0; border: 0; outline: 0; background: none; color: var(--ink); font: inherit; font-size: 13px; }
 .search input::placeholder { color: #6f7590; }
-.search kbd { padding: 3px 7px; border-radius: 5px; background: #dfe3f4; color: #5b607a; font: 700 11px/1 inherit; font-family: inherit; }
 .search:focus-within { box-shadow: 0 0 0 3px rgba(225, 29, 46, .15); }
 
 .top__right { margin-left: auto; display: flex; flex: none; align-items: center; gap: 18px; }
@@ -449,7 +448,6 @@ img { display: block; max-width: 100%; }
 }
 @media (max-width: 560px) {
   .spec, .pair, .meta, .kpis { grid-template-columns: minmax(0, 1fr); }
-  .search kbd { display: none; }
   .top__right { gap: 8px; }
   .user { padding-left: 8px; }
 }

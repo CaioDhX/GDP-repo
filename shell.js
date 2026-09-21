@@ -85,10 +85,6 @@
 
   document.addEventListener("keydown", function (event) {
     if (event.key === "Escape") setMenu(false);
-    if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
-      event.preventDefault();
-      search.focus();
-    }
   });
 
   // Itens do design que ainda não têm função.
