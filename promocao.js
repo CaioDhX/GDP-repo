@@ -254,7 +254,6 @@
   // ---------- Carregar promoção existente ----------
   function applyHeader(d) {
     $("page-title").textContent = d.title;
-    $("eyebrow-current").textContent = "DETALHES #" + d.public_code;
     $("crumb-current").textContent = "Detalhes #" + d.public_code;
     $("sys-id").textContent = d.public_code;
     document.title = d.title + " — GOAT Promo";
