@@ -43,7 +43,7 @@
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "i");
     var use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "assets/icons.svg?v=23#" + id);
+    use.setAttribute("href", "assets/icons.svg?v=24#" + id);
     svg.appendChild(use);
     return svg;
   }
