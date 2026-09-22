@@ -964,3 +964,22 @@ textarea.f-input { height: auto; padding: 10px 12px; resize: vertical; line-heig
 .table--af th:last-child, .table--af td:last-child { padding-right: 14px; }
 .table--af .af-store { min-width: 0; gap: 10px; }
 .table--af .acts .act { width: 28px; height: 28px; }
+
+/* ================= Configurações: Segurança (MFA) ================= */
+.cfg-card { max-width: 720px; }
+.cfg-row { display: flex; align-items: center; gap: 14px; }
+.cfg-row > div { flex: 1; min-width: 0; }
+.cfg-row strong { display: block; font-size: 14px; font-weight: 800; }
+.cfg-row .af-sub { margin-top: 3px; }
+
+.cfg-enroll { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.cfg-enroll__lead { color: var(--muted); font-size: 12.5px; }
+.cfg-enroll__body { display: flex; gap: 20px; margin-top: 14px; align-items: flex-start; }
+.cfg-qr { flex: none; width: 168px; height: 168px; padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+.cfg-enroll__side { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+.cfg-enroll__actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+@media (max-width: 560px) {
+  .cfg-row { flex-wrap: wrap; }
+  .cfg-enroll__body { flex-direction: column; align-items: center; }
+}

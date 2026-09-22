@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Notificações — GOAT Promo</title>
+  <title>Configurações — GOAT Promo</title>
   <meta name="robots" content="noindex">
   <link rel="icon" href="assets/favicon.webp?v=7" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
         <a href="promocoes.html" data-nav="lista"><svg class="i"><use href="assets/icons.svg?v=36#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
         <a href="promocao.html" data-nav="nova"><svg class="i"><use href="assets/icons.svg?v=36#i-plus-circle"/></svg>Nova Promoção</a>
         <a href="afiliados.html" data-nav="afiliados"><svg class="i"><use href="assets/icons.svg?v=36#i-network"/></svg>Afiliados</a>
-        <a href="configuracoes.html" data-nav="config"><svg class="i"><use href="assets/icons.svg?v=36#i-gear"/></svg>Configurações</a>
+        <a href="configuracoes.html" data-nav="config" aria-current="page"><svg class="i"><use href="assets/icons.svg?v=36#i-gear"/></svg>Configurações</a>
       </nav>
 
       <div class="sync">
@@ -44,7 +44,7 @@
       <!-- Topbar -->
       <header class="top">
         <nav class="crumbs" aria-label="Você está em">
-          <strong>Notificações</strong>
+          <strong>Configurações</strong>
         </nav>
 
         <label class="search">
@@ -72,66 +72,63 @@
       <main class="content">
         <div class="head head--list">
           <div>
-            <h1><span class="h1-ico"><svg class="i"><use href="assets/icons.svg?v=36#i-bell"/></svg></span>Histórico de Notificações <span class="chip chip--count" id="total-chip">— itens</span></h1>
-            <p class="sub">Todas as notificações do painel, das mais recentes às mais antigas.</p>
-          </div>
-          <div class="actions">
-            <button class="btn" type="button" id="mark-all"><svg class="i"><use href="assets/icons.svg?v=36#i-check-circle"/></svg>Marcar todas como lidas</button>
+            <h1><span class="h1-ico"><svg class="i"><use href="assets/icons.svg?v=36#i-gear"/></svg></span>Configurações</h1>
+            <p class="sub">Ajustes da sua conta neste painel.</p>
           </div>
         </div>
 
-        <section class="card filters" aria-label="Filtros">
-          <div class="filters__row">
-            <label class="fsearch">
-              <svg class="i"><use href="assets/icons.svg?v=36#i-search"/></svg>
-              <input id="q" type="search" placeholder="Buscar por título ou texto..." autocomplete="off">
-            </label>
-            <select class="f-input f-input--md" id="f-kind" aria-label="Tipo">
-              <option value="">Todos os tipos</option>
-              <option value="success">Sucesso</option>
-              <option value="telegram">Telegram</option>
-              <option value="error">Erro</option>
-              <option value="warning">Alerta</option>
-              <option value="info">Informação</option>
-              <option value="security">Segurança</option>
-              <option value="brand">Destaque</option>
-            </select>
-            <select class="f-input f-input--md" id="f-read" aria-label="Leitura">
-              <option value="">Lidas e não lidas</option>
-              <option value="unread">Só não lidas</option>
-              <option value="read">Só lidas</option>
-            </select>
-            <select class="f-input f-input--md" id="f-period" aria-label="Período">
-              <option value="">Todo o período</option>
-              <option value="24h">Últimas 24h</option>
-              <option value="7d">Últimos 7 dias</option>
-              <option value="30d">Últimos 30 dias</option>
-            </select>
-            <button class="btn btn--md btn--wipe" type="button" id="f-clear" title="Apagar todas as notificações" aria-label="Limpar: apagar todas as notificações"><svg class="i"><use href="assets/icons.svg?v=36#i-trash"/></svg>Limpar</button>
+        <section class="card cfg-card">
+          <header class="card__head">
+            <h2 class="card__title"><svg class="i"><use href="assets/icons.svg?v=36#i-shield"/></svg>Segurança</h2>
+          </header>
+          <div class="card__body">
+            <div class="cfg-row">
+              <div>
+                <strong>Verificação em duas etapas</strong>
+                <p class="af-sub" id="mfa-status">Carregando…</p>
+              </div>
+              <button class="btn btn--primary" type="button" id="mfa-enable" hidden>Ativar</button>
+              <button class="btn btn--del" type="button" id="mfa-disable" hidden>Desativar</button>
+            </div>
+
+            <!-- Ativação: QR + segredo + código de confirmação -->
+            <div class="cfg-enroll" id="mfa-enroll" hidden>
+              <p class="cfg-enroll__lead">Escaneie o QR code com um app autenticador (Google Authenticator, Authy, 1Password…) ou digite o código manualmente.</p>
+              <div class="cfg-enroll__body">
+                <img class="cfg-qr" id="mfa-qr" alt="QR code para configurar a verificação em duas etapas">
+                <div class="cfg-enroll__side">
+                  <div class="f">
+                    <label for="mfa-secret">Código manual</label>
+                    <div class="aff__row">
+                      <input class="f-input f-input--plain mono" id="mfa-secret" type="text" readonly aria-label="Código manual do autenticador">
+                      <button class="btn" type="button" id="mfa-secret-copy"><svg class="i"><use href="assets/icons.svg?v=36#i-copy"/></svg>Copiar</button>
+                    </div>
+                  </div>
+                  <div class="f">
+                    <label for="mfa-verify">Código de 6 dígitos do app</label>
+                    <input class="f-input mfa-code" id="mfa-verify" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="000000" autocomplete="one-time-code">
+                    <small class="f-err" id="mfa-verify-err"></small>
+                  </div>
+                  <div class="cfg-enroll__actions">
+                    <button class="btn" type="button" id="mfa-enroll-cancel">Cancelar</button>
+                    <button class="btn btn--primary" type="button" id="mfa-enroll-confirm">Confirmar e ativar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
-
-        <div id="hist" class="hist" aria-live="polite"></div>
-
-        <div class="empty" id="hist-empty" hidden>
-          <svg class="i"><use href="assets/icons.svg?v=36#i-inbox"/></svg>
-          <h2>Nenhuma notificação encontrada</h2>
-          <p>Ajuste os filtros ou volte mais tarde.</p>
-        </div>
-
-        <div class="hist__foot">
-          <span id="range-text">Carregando…</span>
-          <button class="btn" type="button" id="load-more" hidden>Carregar mais</button>
-        </div>
       </main>
     </div>
   </div>
+
+  <p class="toast" id="toast" role="status" hidden></p>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="config.js?v=36"></script>
   <script src="auth.js?v=36"></script>
   <script src="shell.js?v=36"></script>
   <script src="notify.js?v=36"></script>
-  <script src="notificacoes.js?v=36"></script>
+  <script src="configuracoes.js?v=36"></script>
 </body>
 </html>

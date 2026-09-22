@@ -9,12 +9,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=8">
+  <link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
   <!-- Escondido até a sessão ser validada, para não piscar conteúdo antes do redirecionamento. -->
   <main class="solo" id="panel" hidden>
-    <img class="solo__logo" src="assets/logo.webp?v=8" alt="GOAT das Promoções" width="132" height="132">
+    <img class="solo__logo" src="assets/logo.webp?v=9" alt="GOAT das Promoções" width="132" height="132">
     <h1>Painel</h1>
     <p class="lead">Você está conectado como <strong id="user-email"></strong>.</p>
     <p class="lead">Aqui vai o conteúdo do painel.</p>
@@ -23,8 +23,8 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="config.js?v=8"></script>
-  <script src="auth.js?v=8"></script>
+  <script src="config.js?v=9"></script>
+  <script src="auth.js?v=9"></script>
   <script>
     (function () {
       var client = window.GDP_AUTH.client;
@@ -35,8 +35,14 @@
       client.auth.getSession().then(function (res) {
         var session = res.data && res.data.session;
         if (!session) return toLogin();
-        document.getElementById("user-email").textContent = session.user.email;
-        panel.hidden = false;
+        // Se a conta tem verificação em duas etapas e a sessão ainda não a cumpriu, volta ao login.
+        return client.auth.mfa.getAuthenticatorAssuranceLevel().then(function (aalRes) {
+          var lv = aalRes.data;
+          var pending = aalRes.error || (lv && lv.nextLevel === "aal2" && lv.currentLevel !== "aal2");
+          if (pending) return toLogin();
+          document.getElementById("user-email").textContent = session.user.email;
+          panel.hidden = false;
+        });
       }).catch(toLogin);
 
       // Sessão encerrada em outra aba ou expirada.

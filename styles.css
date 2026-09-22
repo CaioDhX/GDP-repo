@@ -236,6 +236,9 @@ label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; }
 
 .btn-login:disabled { opacity: .65; cursor: progress; box-shadow: none; }
 
+.mfa-code { text-align: center; font-size: 20px; font-weight: 800; letter-spacing: .5em; }
+.mfa-code::placeholder { letter-spacing: .5em; font-weight: 600; }
+
 /* ---------- Página simples (painel) ---------- */
 .solo {
   width: 100%;

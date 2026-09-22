@@ -22,12 +22,19 @@
 
   // ---------- Sessão ----------
   // Resolve com o usuário logado; sem sessão, redireciona e nunca resolve.
+  // Se a conta tem verificação em duas etapas e a sessão ainda não a cumpriu (aal1),
+  // também manda para o login: a etapa 2 é exigida lá, nunca fica pendurada aqui dentro.
   var ready = client.auth.getSession().then(function (res) {
     var session = res.data && res.data.session;
     if (!session) return toLogin();
-    document.getElementById("user-email").textContent = session.user.email || "";
-    document.body.classList.remove("gate");
-    return session.user;
+    return client.auth.mfa.getAuthenticatorAssuranceLevel().then(function (aalRes) {
+      var lv = aalRes.data;
+      var pending = aalRes.error || (lv && lv.nextLevel === "aal2" && lv.currentLevel !== "aal2");
+      if (pending) return toLogin();
+      document.getElementById("user-email").textContent = session.user.email || "";
+      document.body.classList.remove("gate");
+      return session.user;
+    });
   }).catch(toLogin);
 
   client.auth.onAuthStateChange(function (event) {
