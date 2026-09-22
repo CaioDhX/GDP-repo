@@ -7,7 +7,7 @@
 
   var COLUMNS = "id, slug, name, commission_rate, affiliate_tag, logo_url, badge_color, is_active, sort_order, program_name, url_template";
   var NEW = "__new";
-  var VARIABLES = ["SKU", "TAG", "ORIGIN_URL"];
+  var VARIABLES = ["SKU", "TAG", "ORIGIN_URL", "URL"];
 
   function $(id) { return document.getElementById(id); }
 
@@ -24,7 +24,7 @@
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "i");
     var use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "assets/icons.svg?v=32#" + id);
+    use.setAttribute("href", "assets/icons.svg?v=33#" + id);
     svg.appendChild(use);
     return svg;
   }
@@ -169,7 +169,8 @@
 
       var tdKind = el("td", "af-kind");
       var host = s.url_template ? templateHost(s.url_template) : null;
-      tdKind.appendChild(el("span", host ? "mono" : "muted", host || "Estrutura não definida"));
+      var byParams = !!s.url_template && /^\{URL\}/.test(s.url_template);
+      tdKind.appendChild(el("span", host ? "mono" : "muted", host || (byParams ? "Parâmetros no link do produto" : "Estrutura não definida")));
       tdKind.appendChild(el("small", null, s.commission_rate != null ? "Comissão " + fmtPct(s.commission_rate) : "Comissão não informada"));
       tr.appendChild(tdKind);
 
@@ -245,10 +246,14 @@
     if (template.length > 500) return "A estrutura passa de 500 caracteres.";
     var found = template.match(/\{[^}]*\}/g) || [];
     for (var i = 0; i < found.length; i++) {
-      if (VARIABLES.indexOf(found[i].slice(1, -1)) === -1) return "Variável desconhecida: " + found[i] + ". Use {SKU}, {TAG} ou {ORIGIN_URL}.";
+      if (VARIABLES.indexOf(found[i].slice(1, -1)) === -1) return "Variável desconhecida: " + found[i] + ". Use {SKU}, {TAG}, {ORIGIN_URL} ou {URL}.";
     }
     if (template.indexOf("{TAG}") === -1) return "A estrutura precisa conter {TAG}.";
-    if (!isHttp(template.replace(/\{[A-Z_]+\}/g, "x"))) return "A estrutura precisa começar com http:// ou https://.";
+    // {URL} = link do produto sem o que vem depois do "?"; só faz sentido no começo.
+    if (template.indexOf("{URL}") > 0) return "Use {URL} só no começo da estrutura. No meio do link, use {ORIGIN_URL}.";
+    if (template.split("{URL}").length > 2) return "Use {URL} apenas uma vez.";
+    var probe = template.replace(/^\{URL\}/, "https://x.com/p").replace(/\{[A-Z_]+\}/g, "x");
+    if (!isHttp(probe)) return "A estrutura precisa começar com http://, https:// ou {URL}.";
     return "";
   }
 
@@ -389,8 +394,12 @@
     var sku = extractSku(url);
     if (usesSku && !sku) { setErr("gen", "Não consegui identificar o SKU nessa URL."); return; }
 
+    // {URL}: o próprio link do produto, sem query nem #, seguido dos parâmetros da estrutura.
+    var productUrl = url.origin + url.pathname;
+
     // Funções no replace: evitam que "$&" e afins dentro do valor sejam interpretados.
     var link = store.url_template
+      .replace(/^\{URL\}/, function () { return productUrl; })
       .replace(/\{SKU\}/g, function () { return encodeURIComponent(sku); })
       .replace(/\{TAG\}/g, function () { return encodeURIComponent(store.affiliate_tag); })
       .replace(/\{ORIGIN_URL\}/g, function () { return encodeURIComponent(raw); });
