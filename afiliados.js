@@ -24,7 +24,7 @@
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "i");
     var use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "assets/icons.svg?v=34#" + id);
+    use.setAttribute("href", "assets/icons.svg?v=35#" + id);
     svg.appendChild(use);
     return svg;
   }
@@ -382,7 +382,10 @@
     if (state.editing === store.id) {
       var tag = $("a-tag").value.trim();
       var template = $("a-template").value.trim();
-      if (tag && template && !validateTemplate(template)) return { tag: tag, template: template, draft: true };
+      if (tag && template && !validateTemplate(template)) {
+        var matchesSaved = tag === (store.affiliate_tag || "") && template === (store.url_template || "");
+        return { tag: tag, template: template, draft: !matchesSaved };
+      }
     }
     if (store.affiliate_tag && store.url_template) return { tag: store.affiliate_tag, template: store.url_template, draft: false };
     return null;
