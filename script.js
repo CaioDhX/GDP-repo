@@ -71,7 +71,7 @@
     if (!session) return;
     return needsMoreAuth().then(function (needs) {
       if (needs) showMfaStep();
-      else window.location.replace("promocoes.html");
+      else window.location.replace("painel.html");
     });
   });
 
@@ -100,7 +100,7 @@
         }
         return needsMoreAuth().then(function (needs) {
           if (needs) showMfaStep();
-          else window.location.replace("promocoes.html");
+          else window.location.replace("painel.html");
         });
       })
       .catch(function (err) {
@@ -133,7 +133,7 @@
           mfaCode.select();
           return;
         }
-        window.location.replace("promocoes.html");
+        window.location.replace("painel.html");
       })
       .catch(function (err) {
         showNote(mfaFriendlyError(err));

@@ -3,57 +3,182 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>GOAT das Promoções — Painel</title>
+  <title>Painel — GOAT Promo</title>
   <meta name="robots" content="noindex">
   <link rel="icon" href="assets/favicon.webp?v=7" type="image/webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=9">
+  <link rel="stylesheet" href="app.css?v=37">
 </head>
-<body>
-  <!-- Escondido até a sessão ser validada, para não piscar conteúdo antes do redirecionamento. -->
-  <main class="solo" id="panel" hidden>
-    <img class="solo__logo" src="assets/logo.webp?v=9" alt="GOAT das Promoções" width="132" height="132">
-    <h1>Painel</h1>
-    <p class="lead">Você está conectado como <strong id="user-email"></strong>.</p>
-    <p class="lead">Aqui vai o conteúdo do painel.</p>
-    <p class="lead"><a href="promocoes.html" style="color:var(--red);font-weight:700">Ver promoções →</a> &nbsp;·&nbsp; <a href="promocao.html" style="color:var(--red);font-weight:700">Cadastrar nova promoção →</a></p>
-    <button class="btn-login solo__out" type="button" id="logout">Sair</button>
-  </main>
+<body class="gate">
+  <div class="app">
+    <!-- Sidebar -->
+    <aside class="side" aria-label="Menu principal">
+      <div class="side__brand">
+        <img class="side__logo" src="assets/logo.webp?v=9" alt="GOAT das Promoções" width="40" height="40">
+        <div class="side__name"><strong>GOAT<br>Promo</strong><span>PAINEL ADMIN</span></div>
+        <span class="online"><i></i>ONLINE</span>
+      </div>
+
+      <p class="side__label">GERENCIAMENTO</p>
+      <nav class="nav">
+        <a href="painel.html" data-nav="dashboard" aria-current="page"><svg class="i"><use href="assets/icons.svg?v=37#i-grid"/></svg>Dashboard</a>
+        <a href="promocoes.html" data-nav="lista"><svg class="i"><use href="assets/icons.svg?v=37#i-tag"/></svg>Promoções<span class="nav__count" id="nav-count">…</span></a>
+        <a href="promocao.html" data-nav="nova"><svg class="i"><use href="assets/icons.svg?v=37#i-plus-circle"/></svg>Nova Promoção</a>
+        <a href="afiliados.html" data-nav="afiliados"><svg class="i"><use href="assets/icons.svg?v=37#i-network"/></svg>Afiliados</a>
+        <a href="configuracoes.html" data-nav="config"><svg class="i"><use href="assets/icons.svg?v=37#i-gear"/></svg>Configurações</a>
+      </nav>
+
+      <div class="sync">
+        <div class="sync__top">
+          <span class="sync__icon"><svg class="i i--fill"><use href="assets/icons.svg?v=37#i-plane"/></svg></span>
+          <div><strong>TELEGRAM SYNC</strong><span>@goatdaspromocoes</span></div>
+          <i class="sync__dot"></i>
+        </div>
+        <div class="sync__bot"><svg class="i"><use href="assets/icons.svg?v=37#i-bolt"/></svg>Bot Conectado<svg class="i"><use href="assets/icons.svg?v=37#i-check-circle"/></svg></div>
+      </div>
+    </aside>
+
+    <div class="main">
+      <!-- Topbar -->
+      <header class="top">
+        <nav class="crumbs" aria-label="Você está em">
+          <strong>Dashboard</strong>
+        </nav>
+
+        <label class="search">
+          <svg class="i"><use href="assets/icons.svg?v=37#i-search"/></svg>
+          <input id="search" type="search" placeholder="Buscar promoções, cupons ou SKU" autocomplete="off">
+        </label>
+
+        <div class="top__right">
+          <a class="btn-new" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=37#i-plus"/></svg><span>Nova Promoção</span></a>
+          <button class="bell" type="button" aria-label="Notificações"><svg class="i"><use href="assets/icons.svg?v=37#i-bell"/></svg></button>
+          <div class="user">
+            <button class="user__btn" type="button" id="user-btn" aria-haspopup="true" aria-expanded="false">
+              <span class="avatar-u" id="user-initial">?</span>
+              <span><span class="user__name" id="user-name">…</span><span class="user__role">…</span></span>
+              <svg class="i"><use href="assets/icons.svg?v=37#i-down"/></svg>
+            </button>
+            <div class="menu" id="user-menu" hidden>
+              <p id="user-email"></p>
+              <button type="button" id="logout">Sair</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <!-- Cabeçalho -->
+        <div class="head head--list">
+          <div>
+            <p class="eyebrow"><span class="chip chip--pop">PAINEL OPERACIONAL</span><span id="updated-at">Carregando…</span></p>
+            <h1>Visão Geral &amp; Métricas</h1>
+            <p class="sub">Acompanhe o desempenho do seu canal do Telegram e o fluxo de ofertas cadastradas em tempo real.</p>
+          </div>
+          <div class="period" id="period" role="tablist" aria-label="Período">
+            <button type="button" class="period__btn" data-period="today" aria-pressed="true">Hoje</button>
+            <button type="button" class="period__btn" data-period="7d" aria-pressed="false">Últimos 7 dias</button>
+            <button type="button" class="period__btn" data-period="month" aria-pressed="false">Este Mês</button>
+            <button type="button" class="period__btn" data-period="custom" aria-pressed="false"><svg class="i"><use href="assets/icons.svg?v=37#i-clock"/></svg>Personalizado</button>
+          </div>
+        </div>
+
+        <div class="period-custom" id="period-custom" hidden>
+          <label>De <input type="date" id="period-from"></label>
+          <label>Até <input type="date" id="period-to"></label>
+          <button class="btn btn--primary btn--sm" type="button" id="period-apply">Aplicar</button>
+        </div>
+
+        <!-- Indicadores -->
+        <div class="stats-row">
+          <div class="stat">
+            <div><span class="label">Promoções cadastradas</span><strong id="st-created">0</strong><small id="st-created-sub">no período</small></div>
+            <span class="stat__ico stat__ico--red"><svg class="i"><use href="assets/icons.svg?v=37#i-tag"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Promoções ativas</span><strong id="st-active">0</strong><small>Publicadas e dentro da validade</small></div>
+            <span class="stat__ico stat__ico--green"><svg class="i"><use href="assets/icons.svg?v=37#i-bolt"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Promoções publicadas</span><strong id="st-published">0</strong><small id="st-published-sub">no período</small></div>
+            <span class="stat__ico stat__ico--blue"><svg class="i"><use href="assets/icons.svg?v=37#i-check-circle"/></svg></span>
+          </div>
+          <div class="stat">
+            <div><span class="label">Aguardando publicação</span><strong id="st-pending">0</strong><small>Na fila do bot, agora</small></div>
+            <span class="stat__ico stat__ico--gray"><svg class="i"><use href="assets/icons.svg?v=37#i-clock"/></svg></span>
+          </div>
+        </div>
+
+        <!-- Canal do Telegram -->
+        <section class="dash-tg" id="tg-card">
+          <div class="dash-tg__id">
+            <span class="dash-tg__ico"><svg class="i i--fill"><use href="assets/icons.svg?v=37#i-plane"/></svg></span>
+            <div>
+              <strong id="tg-name">Nenhum canal conectado</strong>
+              <span class="dash-tg__status" id="tg-status">Cadastre um canal para ver os dados aqui</span>
+            </div>
+          </div>
+          <div class="dash-tg__metrics" id="tg-metrics" hidden>
+            <div><span>MEMBROS</span><strong id="tg-members">—</strong></div>
+            <div><span>CLIQUES (PERÍODO)</span><strong id="tg-clicks">—</strong></div>
+            <div><span>PROMOÇÕES NO CANAL</span><strong id="tg-deals">—</strong></div>
+          </div>
+          <div class="dash-tg__actions">
+            <button class="btn btn--dark" type="button" id="tg-test">Testar Envio</button>
+            <a class="btn btn--primary" id="tg-open" href="#" target="_blank" rel="noopener noreferrer">Abrir Canal <svg class="i"><use href="assets/icons.svg?v=37#i-ext"/></svg></a>
+          </div>
+        </section>
+
+        <!-- Promoções recentes -->
+        <section class="card list">
+          <div class="list__tools">
+            <div>
+              <strong>Promoções Recentes</strong>
+              <p class="af-sub">Fila de ofertas gerenciadas com dados de precificação e disparo.</p>
+            </div>
+            <div class="dash-recent__tools">
+              <label class="fsearch fsearch--sm">
+                <svg class="i"><use href="assets/icons.svg?v=37#i-search"/></svg>
+                <input id="q" type="search" placeholder="Filtrar por nome, SKU..." autocomplete="off">
+              </label>
+              <button class="btn" type="button" id="refresh-btn"><svg class="i"><use href="assets/icons.svg?v=37#i-sync"/></svg>Atualizar</button>
+            </div>
+          </div>
+
+          <div class="table-wrap" id="rows-wrap">
+            <table class="table table--deals">
+              <thead>
+                <tr><th>Produto</th><th>Loja</th><th class="num">Precificação</th><th class="ctr">Desconto</th><th>Status</th><th>Cadastro</th><th class="ctr">Ações</th></tr>
+              </thead>
+              <tbody id="rows"></tbody>
+            </table>
+          </div>
+
+          <div class="empty" id="empty" hidden>
+            <svg class="i"><use href="assets/icons.svg?v=37#i-inbox"/></svg>
+            <h2 id="empty-title">Nenhuma promoção cadastrada</h2>
+            <p id="empty-text">Cadastre a primeira para ela aparecer aqui.</p>
+            <a class="btn btn--primary" href="promocao.html"><svg class="i"><use href="assets/icons.svg?v=37#i-plus"/></svg><span>Nova Promoção</span></a>
+          </div>
+
+          <div class="list__foot">
+            <span id="range-text"></span>
+            <div class="pager"><div class="pages" id="pages"></div></div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <p class="toast" id="toast" role="status" hidden></p>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="config.js?v=9"></script>
-  <script src="auth.js?v=9"></script>
-  <script>
-    (function () {
-      var client = window.GDP_AUTH.client;
-      var panel = document.getElementById("panel");
-
-      function toLogin() { window.location.replace("index.html"); }
-
-      client.auth.getSession().then(function (res) {
-        var session = res.data && res.data.session;
-        if (!session) return toLogin();
-        // Se a conta tem verificação em duas etapas e a sessão ainda não a cumpriu, volta ao login.
-        return client.auth.mfa.getAuthenticatorAssuranceLevel().then(function (aalRes) {
-          var lv = aalRes.data;
-          var pending = aalRes.error || (lv && lv.nextLevel === "aal2" && lv.currentLevel !== "aal2");
-          if (pending) return toLogin();
-          document.getElementById("user-email").textContent = session.user.email;
-          panel.hidden = false;
-        });
-      }).catch(toLogin);
-
-      // Sessão encerrada em outra aba ou expirada.
-      client.auth.onAuthStateChange(function (event) {
-        if (event === "SIGNED_OUT") toLogin();
-      });
-
-      document.getElementById("logout").addEventListener("click", function () {
-        client.auth.signOut().then(toLogin, toLogin);
-      });
-    })();
-  </script>
+  <script src="config.js?v=37"></script>
+  <script src="auth.js?v=37"></script>
+  <script src="shell.js?v=37"></script>
+  <script src="notify.js?v=37"></script>
+  <script src="painel.js?v=37"></script>
 </body>
 </html>
