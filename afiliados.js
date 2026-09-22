@@ -24,7 +24,7 @@
     var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     svg.setAttribute("class", "i");
     var use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-    use.setAttribute("href", "assets/icons.svg?v=33#" + id);
+    use.setAttribute("href", "assets/icons.svg?v=34#" + id);
     svg.appendChild(use);
     return svg;
   }
@@ -375,6 +375,19 @@
     return last || null;
   }
 
+  // Enquanto a loja está sendo editada no formulário, o gerador usa o que está digitado ali
+  // (mesmo sem "Salvar" ainda), para poder testar antes de gravar. Sem edição em curso, usa
+  // o que já está salvo no banco. "draft" indica qual dos dois foi usado.
+  function effectiveConfig(store) {
+    if (state.editing === store.id) {
+      var tag = $("a-tag").value.trim();
+      var template = $("a-template").value.trim();
+      if (tag && template && !validateTemplate(template)) return { tag: tag, template: template, draft: true };
+    }
+    if (store.affiliate_tag && store.url_template) return { tag: store.affiliate_tag, template: store.url_template, draft: false };
+    return null;
+  }
+
   $("gen-form").addEventListener("submit", function (event) {
     event.preventDefault();
     setErr("gen", "");
@@ -387,24 +400,26 @@
 
     var store = $("g-store").value ? storeById($("g-store").value) : detectStore(url.hostname);
     if (!store) { setErr("gen", "Não reconheci a loja por essa URL. Escolha a loja na lista."); return; }
-    if (!store.affiliate_tag) { setErr("gen", "Configure a tag de afiliado de " + store.name + " antes de gerar links."); return; }
-    if (!store.url_template) { setErr("gen", "Defina a estrutura da URL de " + store.name + " antes de gerar links."); return; }
+    var cfg = effectiveConfig(store);
+    if (!cfg) { setErr("gen", "Informe a tag e a estrutura da URL de " + store.name + " no formulário acima (não precisa salvar para testar)."); return; }
 
-    var usesSku = store.url_template.indexOf("{SKU}") !== -1;
+    var usesSku = cfg.template.indexOf("{SKU}") !== -1;
     var sku = extractSku(url);
     if (usesSku && !sku) { setErr("gen", "Não consegui identificar o SKU nessa URL."); return; }
 
     // {URL}: o próprio link do produto, sem query nem #, seguido dos parâmetros da estrutura.
+    // O caminho (path) é exatamente o da URL colada — se ela já vier "limpa" (a página oficial
+    // do produto, sem parâmetros de busca), o link gerado também sai curto.
     var productUrl = url.origin + url.pathname;
 
     // Funções no replace: evitam que "$&" e afins dentro do valor sejam interpretados.
-    var link = store.url_template
+    var link = cfg.template
       .replace(/^\{URL\}/, function () { return productUrl; })
       .replace(/\{SKU\}/g, function () { return encodeURIComponent(sku); })
-      .replace(/\{TAG\}/g, function () { return encodeURIComponent(store.affiliate_tag); })
+      .replace(/\{TAG\}/g, function () { return encodeURIComponent(cfg.tag); })
       .replace(/\{ORIGIN_URL\}/g, function () { return encodeURIComponent(raw); });
 
-    $("g-tag").textContent = store.affiliate_tag;
+    $("g-tag").textContent = cfg.tag + (cfg.draft ? " (ainda não salva)" : "");
     $("g-link").value = link;
     $("g-sku").textContent = usesSku ? "SKU usado: " + sku : store.name;
     var open = $("g-open");
