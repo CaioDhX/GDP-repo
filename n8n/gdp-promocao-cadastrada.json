@@ -1,0 +1,72 @@
+{
+  "name": "GDP — Promoção cadastrada",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## GDP — Promoção cadastrada\nDisparado pelo Supabase a cada promoção nova (tabela `deals`).\n\n1. No nó **Supabase: promoção cadastrada**, escolha uma credencial **Header Auth** com Name `X-GDP-Secret` e Value = segredo do Vault (`n8n_webhook_secret`).\n2. **Ative** o workflow e copie a **Production URL** do webhook.\n3. Cadastre essa URL no Supabase (instruções em `supabase/n8n_webhook.sql`).\n4. Próximo passo: depois de **Dados da promoção**, ligue um nó Telegram usando o campo `mensagem` (e `imagem` para enviar com foto).",
+        "height": 320,
+        "width": 460
+      },
+      "id": "0f3a6c2e-51d4-4b7a-9c1e-2a8b7d4e6f10",
+      "name": "Como usar",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [-80, -380]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "gdp-deal-created",
+        "authentication": "headerAuth",
+        "responseMode": "onReceived",
+        "options": {}
+      },
+      "id": "5b1f9c1e-6a2b-4c3d-9e8f-0a1b2c3d4e01",
+      "name": "Supabase: promoção cadastrada",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [0, 0],
+      "webhookId": "7d2e4f6a-8b9c-4d1e-a2f3-b4c5d6e7f801"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "a1000001-0000-4000-8000-000000000001", "name": "evento", "value": "={{ $json.body.event }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000002", "name": "id", "value": "={{ $json.body.deal.id }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000003", "name": "codigo", "value": "={{ $json.body.deal.public_code }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000004", "name": "titulo", "value": "={{ $json.body.deal.title }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000005", "name": "status", "value": "={{ $json.body.deal.status }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000006", "name": "loja", "value": "={{ $json.body.store ? $json.body.store.name : '' }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000007", "name": "preco_promo", "value": "={{ $json.body.deal.price_promo }}", "type": "number" },
+            { "id": "a1000001-0000-4000-8000-000000000008", "name": "preco_de", "value": "={{ $json.body.deal.price_original != null ? Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '' }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000009", "name": "preco_por", "value": "={{ Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-00000000000a", "name": "desconto", "value": "={{ $json.body.deal.discount_pct != null ? $json.body.deal.discount_pct + '% OFF' : '' }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-00000000000b", "name": "cupom", "value": "={{ $json.body.deal.coupon_code || '' }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-00000000000c", "name": "link_afiliado", "value": "={{ $json.body.deal.affiliate_url }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-00000000000d", "name": "imagem", "value": "={{ $json.body.deal.image_url || '' }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-00000000000e", "name": "painel", "value": "={{ $json.body.panel_url }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-00000000000f", "name": "mensagem", "value": "={{ '🔥 ' + $json.body.deal.title + '\\n\\n' + ($json.body.deal.price_original != null ? '📌 De: ' + Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '\\n' : '') + '👉 Por apenas: ' + Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ($json.body.deal.payment_note ? ' (' + $json.body.deal.payment_note + ')' : '') + ($json.body.deal.coupon_code ? '\\n🎫 Cupom: ' + $json.body.deal.coupon_code : '') + ($json.body.deal.highlight ? '\\n⚡ ' + $json.body.deal.highlight : '') + ($json.body.deal.shipping === 'free' ? '\\n📦 Frete grátis' : '') + '\\n\\n🛒 ' + $json.body.deal.affiliate_url }}", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9c4d2b7a-3e1f-4a6b-8d5c-7e2f1a0b9c20",
+      "name": "Dados da promoção",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [260, 0]
+    }
+  ],
+  "connections": {
+    "Supabase: promoção cadastrada": {
+      "main": [
+        [
+          { "node": "Dados da promoção", "type": "main", "index": 0 }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": { "executionOrder": "v1" }
+}
