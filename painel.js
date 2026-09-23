@@ -1,5 +1,5 @@
 // Dashboard: indicadores reais (public.deals/channels/deal_clicks/deal_dispatches),
-// canal do Telegram (mostra estado vazio até existir um canal cadastrado) e as
+// canal do Telegram (dados do n8n: envios confirmados, cliques do /go/, membros, teste) e as
 // promoções mais recentes, com busca, paginação e ações. Sem números inventados:
 // tudo começa em 0 e cresce conforme o uso real do painel.
 (function () {
@@ -113,11 +113,14 @@
   }
 
   // ---------- Canal do Telegram ----------
+  var channel = null;
+
   function loadChannel(range) {
-    client.from("channels").select("id, name, username, member_count, is_active")
+    client.from("channels").select("id, name, username, member_count, member_count_updated_at, is_active")
       .order("is_default", { ascending: false }).limit(1).maybeSingle()
       .then(function (res) {
         var ch = res.data;
+        channel = ch || null;
         if (!ch) {
           $("tg-name").textContent = "Nenhum canal conectado";
           $("tg-status").textContent = "Cadastre um canal para ver os dados aqui";
@@ -131,12 +134,16 @@
         $("tg-status").className = "dash-tg__status" + (ch.is_active ? " on" : "");
         $("tg-metrics").hidden = false;
         $("tg-members").textContent = ch.member_count != null ? Number(ch.member_count).toLocaleString("pt-BR") : "—";
+        $("tg-members").title = ch.member_count_updated_at
+          ? "Contagem do Telegram, atualizada " + relTime(new Date(ch.member_count_updated_at))
+          : "Aguardando a primeira contagem do Telegram";
         $("tg-open").href = ch.username ? "https://t.me/" + ch.username : "#";
 
+        // Cliques vêm do link rastreado dos botões (/go/); envios só contam quando o Telegram confirmou.
         var clicks = client.from("deal_clicks").select("id", { count: "exact", head: true }).eq("channel_id", ch.id).gte("created_at", range.from.toISOString());
         if (range.to) clicks = clicks.lte("created_at", range.to.toISOString());
-        var disp = client.from("deal_dispatches").select("id", { count: "exact", head: true }).eq("channel_id", ch.id).gte("started_at", range.from.toISOString());
-        if (range.to) disp = disp.lte("started_at", range.to.toISOString());
+        var disp = client.from("deal_dispatches").select("id", { count: "exact", head: true }).eq("channel_id", ch.id).eq("state", "sent").gte("sent_at", range.from.toISOString());
+        if (range.to) disp = disp.lte("sent_at", range.to.toISOString());
 
         Promise.all([countOf(clicks), countOf(disp)]).then(function (n) {
           $("tg-clicks").textContent = n[0].toLocaleString("pt-BR");
@@ -145,9 +152,70 @@
       });
   }
 
+  // "Testar Envio": o banco pede ao n8n (event channel.test), o bot publica uma mensagem silenciosa,
+  // apaga em seguida e o n8n devolve o resultado em public.channels (last_test_*).
+  var testing = false;
   $("tg-test").addEventListener("click", function () {
-    toast({ kind: "info", title: "Ainda não implementado", body: "O envio de teste depende do bot do Telegram, que ainda não está conectado." });
+    if (testing) return;
+    if (!channel) {
+      toast({ kind: "info", title: "Nenhum canal conectado", body: "Cadastre um canal do Telegram para testar o envio." });
+      return;
+    }
+    var ch = channel;
+    shell.confirm({
+      title: "Testar envio no canal?",
+      name: ch.name + (ch.username ? " (@" + ch.username + ")" : ""),
+      body: "O bot publica uma mensagem de teste silenciosa (sem notificar os membros) e apaga logo em seguida.",
+      confirmLabel: "Testar agora"
+    }).then(function (ok) { if (ok) runChannelTest(ch); });
   });
+
+  function runChannelTest(ch) {
+    var btn = $("tg-test");
+    testing = true;
+    btn.disabled = true;
+    btn.textContent = "Testando…";
+    function done() { testing = false; btn.disabled = false; btn.textContent = "Testar Envio"; }
+
+    client.rpc("channel_test_request", { p_channel_id: ch.id }).then(function (res) {
+      if (res.error) {
+        done();
+        toast({ kind: "error", title: "Não foi possível testar", body: res.error.message });
+        return;
+      }
+      var since = new Date(res.data).getTime();
+      var started = Date.now();
+      (function poll() {
+        if (Date.now() - started > 40000) {
+          done();
+          toast({ kind: "warning", title: "Sem resposta do n8n", body: "Confira se o workflow \"GDP — Promoção para o Telegram\" está ativo e na versão nova." });
+          return;
+        }
+        client.from("channels").select("last_test_at, last_test_ok, last_test_deleted, last_test_error")
+          .eq("id", ch.id).maybeSingle()
+          .then(function (r) {
+            var c = r.data;
+            if (c && c.last_test_at && new Date(c.last_test_at).getTime() >= since) {
+              done();
+              if (c.last_test_ok) {
+                toast({
+                  kind: c.last_test_deleted === false ? "warning" : "success",
+                  title: "Envio funcionando",
+                  body: c.last_test_deleted === false
+                    ? "O bot publicou, mas não conseguiu apagar a mensagem de teste. Apague-a pelo Telegram."
+                    : "O bot publicou e apagou a mensagem de teste no canal."
+                });
+              } else {
+                toast({ kind: "error", title: "O bot não conseguiu publicar", body: c.last_test_error || "Confira se o bot é administrador do canal." });
+              }
+              loadStats();
+              return;
+            }
+            setTimeout(poll, 2000);
+          }, function () { setTimeout(poll, 2000); });
+      })();
+    });
+  }
   $("tg-open").addEventListener("click", function (event) {
     if ($("tg-open").getAttribute("href") === "#") {
       event.preventDefault();

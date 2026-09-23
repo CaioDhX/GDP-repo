@@ -3,15 +3,15 @@
   "nodes": [
     {
       "parameters": {
-        "content": "## GDP — Promoção para o Telegram\nO Supabase chama este webhook quando uma promoção é cadastrada (`deal.created`) ou vira Pronta (`deal.ready`). Só promoções com status **ready** são publicadas; rascunhos e testes param no nó **Está pronta?**.\n\n1. **Supabase: promoção cadastrada** → credencial **Header Auth** (`X-GDP-Secret`).\n2. **Telegram: com foto** e **Telegram: só texto** → credencial **Telegram API** com o token do bot.\n3. Em **Dados da promoção**, troque o campo `canal` pelo `@usuario` do canal (ou o ID `-100…` se for privado).\n4. O bot precisa ser **administrador do canal** com permissão de publicar.\n5. Só um workflow pode estar ativo com o caminho `gdp-deal-created`.",
-        "height": 380,
-        "width": 520
+        "content": "## GDP — Promoção para o Telegram\nO Supabase chama este webhook quando uma promoção é cadastrada (`deal.created`), vira Pronta (`deal.ready`) ou quando alguém clica em **Testar Envio** no Dashboard (`channel.test`).\n\n**Credenciais** (selecione depois de importar):\n1. **Supabase: promoção cadastrada** → **Header Auth** (`X-GDP-Secret`).\n2. Os 4 nós **Telegram** → **Telegram API** (token do bot).\n\nO canal vem do painel (tabela `channels`): não precisa digitar o @ aqui. Sem canal ativo, nada é publicado.\n\nOs nós **GDP: …** devolvem o resultado ao painel (promoção vira Publicada/Falhou, envio registrado). Eles usam a chave pública (anon) do Supabase; quem autoriza é o mesmo segredo X-GDP-Secret que chegou no webhook.\n\nSó um workflow pode estar ativo com o caminho `gdp-deal-created`.",
+        "height": 520,
+        "width": 560
       },
       "id": "0f3a6c2e-51d4-4b7a-9c1e-2a8b7d4e6f10",
       "name": "Como usar",
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
-      "position": [-80, -440]
+      "position": [-120, -660]
     },
     {
       "parameters": {
@@ -30,9 +30,32 @@
     },
     {
       "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "b2000001-0000-4000-8000-000000000010",
+              "leftValue": "={{ $json.body.event }}",
+              "rightValue": "channel.test",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4d7e9a1b-2c3f-4e5a-8b6c-9d0e1f2a3b70",
+      "name": "Teste do canal?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
         "assignments": {
           "assignments": [
-            { "id": "a1000001-0000-4000-8000-000000000010", "name": "canal", "value": "@SEU_CANAL", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000010", "name": "canal", "value": "={{ $json.body.channel ? $json.body.channel.chat_id : '' }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000012", "name": "envio", "value": "={{ $json.body.dispatch_id || '' }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-000000000001", "name": "evento", "value": "={{ $json.body.event }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-000000000002", "name": "id", "value": "={{ $json.body.deal.id }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-000000000003", "name": "codigo", "value": "={{ $json.body.deal.public_code }}", "type": "string" },
@@ -45,10 +68,11 @@
             { "id": "a1000001-0000-4000-8000-00000000000a", "name": "desconto", "value": "={{ $json.body.deal.discount_pct != null ? $json.body.deal.discount_pct + '% OFF' : '' }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-00000000000b", "name": "cupom", "value": "={{ $json.body.deal.coupon_code || '' }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-00000000000c", "name": "link_afiliado", "value": "={{ $json.body.deal.affiliate_url }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-000000000013", "name": "link_botao", "value": "={{ $json.body.tracking_url || $json.body.deal.affiliate_url }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-00000000000d", "name": "imagem", "value": "={{ $json.body.deal.image_url || '' }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-00000000000e", "name": "painel", "value": "={{ $json.body.panel_url }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-00000000000f", "name": "mensagem", "value": "={{ '🔥 ' + $json.body.deal.title + '\\n\\n' + ($json.body.deal.price_original != null ? '📌 De: ' + Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '\\n' : '') + '👉 Por apenas: ' + Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ($json.body.deal.payment_note ? ' (' + $json.body.deal.payment_note + ')' : '') + ($json.body.deal.coupon_code ? '\\n🎫 Cupom: ' + $json.body.deal.coupon_code : '') + ($json.body.deal.highlight ? '\\n⚡ ' + $json.body.deal.highlight : '') + ($json.body.deal.shipping === 'free' ? '\\n📦 Frete grátis' : '') }}", "type": "string" },
-            { "id": "a1000001-0000-4000-8000-000000000011", "name": "mensagem_com_link", "value": "={{ '🔥 ' + $json.body.deal.title + '\\n\\n' + ($json.body.deal.price_original != null ? '📌 De: ' + Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '\\n' : '') + '👉 Por apenas: ' + Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ($json.body.deal.payment_note ? ' (' + $json.body.deal.payment_note + ')' : '') + ($json.body.deal.coupon_code ? '\\n🎫 Cupom: ' + $json.body.deal.coupon_code : '') + ($json.body.deal.highlight ? '\\n⚡ ' + $json.body.deal.highlight : '') + ($json.body.deal.shipping === 'free' ? '\\n📦 Frete grátis' : '') + '\\n\\n🛒 ' + $json.body.deal.affiliate_url }}", "type": "string" }
+            { "id": "a1000001-0000-4000-8000-000000000011", "name": "mensagem_com_link", "value": "={{ '🔥 ' + $json.body.deal.title + '\\n\\n' + ($json.body.deal.price_original != null ? '📌 De: ' + Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '\\n' : '') + '👉 Por apenas: ' + Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ($json.body.deal.payment_note ? ' (' + $json.body.deal.payment_note + ')' : '') + ($json.body.deal.coupon_code ? '\\n🎫 Cupom: ' + $json.body.deal.coupon_code : '') + ($json.body.deal.highlight ? '\\n⚡ ' + $json.body.deal.highlight : '') + ($json.body.deal.shipping === 'free' ? '\\n📦 Frete grátis' : '') + '\\n\\n🛒 ' + ($json.body.tracking_url || $json.body.deal.affiliate_url) }}", "type": "string" }
           ]
         },
         "options": {}
@@ -57,7 +81,7 @@
       "name": "Dados da promoção",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
-      "position": [260, 0]
+      "position": [480, -140]
     },
     {
       "parameters": {
@@ -69,6 +93,18 @@
               "leftValue": "={{ $json.status }}",
               "rightValue": "ready",
               "operator": { "type": "string", "operation": "equals" }
+            },
+            {
+              "id": "b2000001-0000-4000-8000-000000000003",
+              "leftValue": "={{ $json.envio }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty", "singleValue": true }
+            },
+            {
+              "id": "b2000001-0000-4000-8000-000000000004",
+              "leftValue": "={{ $json.canal }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty", "singleValue": true }
             }
           ],
           "combinator": "and"
@@ -79,7 +115,7 @@
       "name": "Está pronta?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [520, 0]
+      "position": [720, -140]
     },
     {
       "parameters": {
@@ -101,7 +137,7 @@
       "name": "Tem foto?",
       "type": "n8n-nodes-base.if",
       "typeVersion": 2,
-      "position": [780, -100]
+      "position": [960, -240]
     },
     {
       "parameters": {
@@ -114,7 +150,7 @@
             {
               "row": {
                 "buttons": [
-                  { "text": "🛒 PEGAR PROMOÇÃO", "additionalFields": { "url": "={{ $json.link_afiliado }}" } }
+                  { "text": "🛒 PEGAR PROMOÇÃO", "additionalFields": { "url": "={{ $json.link_botao }}" } }
                 ]
               }
             }
@@ -126,7 +162,8 @@
       "name": "Telegram: com foto",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [1040, -200]
+      "position": [1200, -340],
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -139,7 +176,7 @@
             {
               "row": {
                 "buttons": [
-                  { "text": "🛒 PEGAR PROMOÇÃO", "additionalFields": { "url": "={{ $json.link_afiliado }}" } }
+                  { "text": "🛒 PEGAR PROMOÇÃO", "additionalFields": { "url": "={{ $json.link_botao }}" } }
                 ]
               }
             }
@@ -151,12 +188,94 @@
       "name": "Telegram: só texto",
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
-      "position": [1040, 0]
+      "position": [1200, -140],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://tfggjmkjfrgdmfypqdfw.supabase.co/rest/v1/rpc/n8n_report_dispatch",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRmZ2dqbWtqZnJnZG1meXBxZGZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NDc0OTksImV4cCI6MjEwNTUyMzQ5OX0.K3W8DygSmvTFOlhxEbms8jeD8Yf44dxWq40C4H1nFkw" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_secret: $('Supabase: promoção cadastrada').item.json.headers['x-gdp-secret'], p_dispatch_id: $('Dados da promoção').item.json.envio, p_ok: $json.ok === true, p_message_id: $json.result ? $json.result.message_id : null, p_message: ($json.result && ($json.result.caption || $json.result.text)) || $('Dados da promoção').item.json.mensagem, p_error: $json.ok === true ? null : String($json.error || 'Falha ao publicar no Telegram') }) }}",
+        "options": {}
+      },
+      "id": "e5a7c9b1-3d2f-4a6e-8c0b-1f2e3d4c5b80",
+      "name": "GDP: registrar publicação",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1460, -240],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "chatId": "={{ $json.body.channel.chat_id }}",
+        "text": "🔧 Teste de conexão do painel GDP.\nEsta mensagem é apagada automaticamente.",
+        "additionalFields": { "appendAttribution": false, "disable_notification": true }
+      },
+      "id": "f1b3d5e7-9a2c-4b6d-8e0f-2a4c6e8b0d91",
+      "name": "Teste: enviar",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [480, 220],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "deleteMessage",
+        "chatId": "={{ $('Supabase: promoção cadastrada').item.json.body.channel.chat_id }}",
+        "messageId": "={{ $json.result ? String($json.result.message_id) : '0' }}"
+      },
+      "id": "a2c4e6f8-0b1d-4c3e-9f5a-7b9d1f3e5a02",
+      "name": "Teste: apagar",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [720, 220],
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://tfggjmkjfrgdmfypqdfw.supabase.co/rest/v1/rpc/n8n_report_channel_test",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRmZ2dqbWtqZnJnZG1meXBxZGZ3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODk5NDc0OTksImV4cCI6MjEwNTUyMzQ5OX0.K3W8DygSmvTFOlhxEbms8jeD8Yf44dxWq40C4H1nFkw" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ p_secret: $('Supabase: promoção cadastrada').item.json.headers['x-gdp-secret'], p_channel_id: $('Supabase: promoção cadastrada').item.json.body.channel.id, p_ok: $('Teste: enviar').item.json.ok === true, p_deleted: $json.ok === true, p_error: $('Teste: enviar').item.json.ok === true ? null : String($('Teste: enviar').item.json.error || 'Falha ao publicar no Telegram'), p_chat_title: $('Teste: enviar').item.json.result ? $('Teste: enviar').item.json.result.chat.title : null }) }}",
+        "options": {}
+      },
+      "id": "b3d5f7a9-1c2e-4d4f-8a6b-8c0e2a4d6f13",
+      "name": "GDP: resultado do teste",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [960, 220],
+      "retryOnFail": true,
+      "maxTries": 3,
+      "waitBetweenTries": 2000
     }
   ],
   "connections": {
     "Supabase: promoção cadastrada": {
-      "main": [[{ "node": "Dados da promoção", "type": "main", "index": 0 }]]
+      "main": [[{ "node": "Teste do canal?", "type": "main", "index": 0 }]]
+    },
+    "Teste do canal?": {
+      "main": [
+        [{ "node": "Teste: enviar", "type": "main", "index": 0 }],
+        [{ "node": "Dados da promoção", "type": "main", "index": 0 }]
+      ]
     },
     "Dados da promoção": {
       "main": [[{ "node": "Está pronta?", "type": "main", "index": 0 }]]
@@ -172,6 +291,18 @@
         [{ "node": "Telegram: com foto", "type": "main", "index": 0 }],
         [{ "node": "Telegram: só texto", "type": "main", "index": 0 }]
       ]
+    },
+    "Telegram: com foto": {
+      "main": [[{ "node": "GDP: registrar publicação", "type": "main", "index": 0 }]]
+    },
+    "Telegram: só texto": {
+      "main": [[{ "node": "GDP: registrar publicação", "type": "main", "index": 0 }]]
+    },
+    "Teste: enviar": {
+      "main": [[{ "node": "Teste: apagar", "type": "main", "index": 0 }]]
+    },
+    "Teste: apagar": {
+      "main": [[{ "node": "GDP: resultado do teste", "type": "main", "index": 0 }]]
     }
   },
   "pinData": {},

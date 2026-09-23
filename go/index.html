@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GOAT das Promoções</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <link rel="icon" href="../assets/favicon.webp?v=7" type="image/webp">
+  <style>
+    :root { --bg: #f8f9ff; --ink: #171a2b; --muted: #6b7083; --line: #e6e8f2; --red: #e21d2d; --red-dark: #c8101f; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px 16px;
+      background: var(--bg); color: var(--ink);
+      font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    }
+    .card { width: 100%; max-width: 360px; padding: 32px 24px; border: 1px solid var(--line); border-radius: 18px; background: #fff; text-align: center; }
+    .card img { display: block; width: 72px; height: 72px; margin: 0 auto 18px; }
+    h1 { margin: 0 0 6px; font-size: 18px; }
+    p { margin: 0; color: var(--muted); font-size: 14px; }
+    .spin { width: 28px; height: 28px; margin: 22px auto 0; border: 3px solid var(--line); border-top-color: var(--red); border-radius: 50%; animation: spin .8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .actions { display: grid; gap: 10px; margin-top: 22px; }
+    .btn { display: block; padding: 12px 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; color: var(--ink); font: inherit; font-weight: 700; text-decoration: none; cursor: pointer; }
+    .btn--primary { border-color: var(--red); background: var(--red); color: #fff; }
+    .btn--primary:hover { background: var(--red-dark); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img src="../assets/logo.webp?v=14" alt="GOAT das Promoções" width="72" height="72">
+    <h1 id="title">Abrindo a oferta…</h1>
+    <p id="msg">Você será levado para a loja em instantes.</p>
+    <div class="spin" id="spin" aria-hidden="true"></div>
+    <div class="actions" id="actions" hidden>
+      <button class="btn btn--primary" type="button" id="retry">Tentar de novo</button>
+      <a class="btn" id="back" href="https://t.me/goatpromocoes">Voltar ao canal</a>
+    </div>
+  </main>
+
+  <script src="../config.js?v=14"></script>
+  <script>
+    // Link dos botões do Telegram: /go/?p=GP-1234&c=canal
+    // Registra o clique (public.deal_click) e segue para o link afiliado que está no banco.
+    (function () {
+      var cfg = window.GDP_CONFIG;
+      var params = new URLSearchParams(window.location.search);
+      var code = (params.get("p") || "").trim();
+      var channel = (params.get("c") || "").trim();
+      if (!/^[a-z0-9_]{4,32}$/i.test(channel)) channel = "";
+
+      function $(id) { return document.getElementById(id); }
+      if (channel) $("back").href = "https://t.me/" + channel;
+
+      function fail(title, msg, canRetry) {
+        $("title").textContent = title;
+        $("msg").textContent = msg;
+        $("spin").hidden = true;
+        $("retry").hidden = !canRetry;
+        $("actions").hidden = false;
+      }
+
+      function go() {
+        $("title").textContent = "Abrindo a oferta…";
+        $("msg").textContent = "Você será levado para a loja em instantes.";
+        $("spin").hidden = false;
+        $("actions").hidden = true;
+
+        var ctrl = typeof AbortController === "function" ? new AbortController() : null;
+        var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 8000);
+
+        fetch(cfg.supabaseUrl + "/rest/v1/rpc/deal_click", {
+          method: "POST",
+          headers: { "apikey": cfg.supabaseAnonKey, "Content-Type": "application/json" },
+          body: JSON.stringify({ p_code: code, p_channel: channel || null, p_referrer: document.referrer || null }),
+          signal: ctrl ? ctrl.signal : undefined
+        })
+          .then(function (res) {
+            clearTimeout(timer);
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then(function (url) {
+            if (typeof url === "string" && /^https?:\/\//i.test(url)) {
+              window.location.replace(url);
+            } else {
+              fail("Oferta indisponível", "Essa promoção não está mais no ar. Confira as ofertas novas no canal.", false);
+            }
+          })
+          .catch(function () {
+            clearTimeout(timer);
+            fail("Não deu para abrir agora", "Verifique sua conexão e tente de novo.", true);
+          });
+      }
+
+      $("retry").addEventListener("click", go);
+
+      if (!/^[A-Za-z]{1,6}-\d{1,9}$/.test(code)) {
+        fail("Link inválido", "Esse link de oferta está incompleto. Confira as ofertas no canal.", false);
+        return;
+      }
+      go();
+    })();
+  </script>
+</body>
+</html>
