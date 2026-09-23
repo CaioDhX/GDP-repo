@@ -1,5 +1,6 @@
--- Integração Supabase -> n8n: a cada promoção cadastrada (INSERT em public.deals),
--- o banco faz um POST no webhook do n8n. Já aplicado no projeto; idempotente.
+-- Integração Supabase -> n8n: o banco faz um POST no webhook do n8n quando uma promoção
+-- é cadastrada (event "deal.created") ou quando passa a "Pronta" (event "deal.ready").
+-- O workflow só publica promoções com status "ready". Já aplicado no projeto; idempotente.
 --
 -- Como funciona
 --   * pg_net envia de forma assíncrona: a gravação da promoção nunca espera nem falha por causa do n8n.
@@ -9,7 +10,7 @@
 --   * Sem a URL cadastrada, o gatilho não envia nada.
 --
 -- Corpo enviado (JSON):
---   { "event": "deal.created", "sent_at": "...", "panel_url": "https://gdp.douglas-code.com.br/promocao.html?id=...",
+--   { "event": "deal.created" | "deal.ready", "sent_at": "...", "panel_url": "https://gdp.douglas-code.com.br/promocao.html?id=...",
 --     "deal":  { ...todas as colunas de public.deals, exceto search_vector... },
 --     "store": { "id", "name", "slug", "affiliate_tag", "url_template" } }
 --
@@ -53,7 +54,7 @@ begin
   select decrypted_secret into v_secret from vault.decrypted_secrets where name = 'n8n_webhook_secret';
 
   v_body := jsonb_build_object(
-    'event',     'deal.created',
+    'event',     case when tg_op = 'INSERT' then 'deal.created' else 'deal.ready' end,
     'sent_at',   now(),
     'panel_url', 'https://gdp.douglas-code.com.br/promocao.html?id=' || new.id::text,
     'deal',      to_jsonb(new) - 'search_vector',
@@ -84,3 +85,11 @@ drop trigger if exists deals_to_n8n_insert on public.deals;
 create trigger deals_to_n8n_insert
   after insert on public.deals
   for each row execute function public.deals_to_n8n();
+
+-- Só na passagem para "ready": editar uma promoção que já está pronta não reenvia.
+drop trigger if exists deals_to_n8n_ready on public.deals;
+create trigger deals_to_n8n_ready
+  after update of status on public.deals
+  for each row
+  when (old.status is distinct from new.status and new.status = 'ready')
+  execute function public.deals_to_n8n();
