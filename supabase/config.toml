@@ -1,0 +1,2 @@
+[functions.publicar-promocao]
+verify_jwt = false

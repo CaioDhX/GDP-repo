@@ -71,7 +71,7 @@
             { "id": "a1000001-0000-4000-8000-000000000013", "name": "link_botao", "value": "={{ $json.body.tracking_url || $json.body.deal.affiliate_url }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-00000000000d", "name": "imagem", "value": "={{ $json.body.deal.image_url || '' }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-00000000000e", "name": "painel", "value": "={{ $json.body.panel_url }}", "type": "string" },
-            { "id": "a1000001-0000-4000-8000-00000000000f", "name": "mensagem", "value": "={{ '🔥 ' + $json.body.deal.title + '\\n\\n' + ($json.body.deal.price_original != null ? '📌 De: ' + Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '\\n' : '') + '👉 Por apenas: ' + Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ($json.body.deal.payment_note ? ' (' + $json.body.deal.payment_note + ')' : '') + ($json.body.deal.coupon_code ? '\\n🎫 Cupom: ' + $json.body.deal.coupon_code : '') + ($json.body.deal.highlight ? '\\n⚡ ' + $json.body.deal.highlight : '') + ($json.body.deal.shipping === 'free' ? '\\n📦 Frete grátis' : '') }}", "type": "string" },
+            { "id": "a1000001-0000-4000-8000-00000000000f", "name": "mensagem", "value": "={{ $json.body.telegram ? $json.body.telegram.message : ('🔥 ' + $json.body.deal.title + '\\n\\n' + ($json.body.deal.price_original != null ? '📌 De: ' + Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '\\n' : '') + '👉 Por apenas: ' + Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ($json.body.deal.payment_note ? ' (' + $json.body.deal.payment_note + ')' : '') + ($json.body.deal.coupon_code ? '\\n🎫 Cupom: ' + $json.body.deal.coupon_code : '') + ($json.body.deal.highlight ? '\\n⚡ ' + $json.body.deal.highlight : '') + ($json.body.deal.shipping === 'free' ? '\\n📦 Frete grátis' : '') ).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;') }}", "type": "string" },
             { "id": "a1000001-0000-4000-8000-000000000011", "name": "mensagem_com_link", "value": "={{ '🔥 ' + $json.body.deal.title + '\\n\\n' + ($json.body.deal.price_original != null ? '📌 De: ' + Number($json.body.deal.price_original).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + '\\n' : '') + '👉 Por apenas: ' + Number($json.body.deal.price_promo).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) + ($json.body.deal.payment_note ? ' (' + $json.body.deal.payment_note + ')' : '') + ($json.body.deal.coupon_code ? '\\n🎫 Cupom: ' + $json.body.deal.coupon_code : '') + ($json.body.deal.highlight ? '\\n⚡ ' + $json.body.deal.highlight : '') + ($json.body.deal.shipping === 'free' ? '\\n📦 Frete grátis' : '') + '\\n\\n🛒 ' + ($json.body.tracking_url || $json.body.deal.affiliate_url) }}", "type": "string" }
           ]
         },
@@ -156,7 +156,7 @@
             }
           ]
         },
-        "additionalFields": { "caption": "={{ $json.mensagem }}" }
+        "additionalFields": { "caption": "={{ $json.mensagem }}", "parse_mode": "HTML" }
       },
       "id": "8b4f6a2c-3d5e-4f7a-8c9b-1d3e5f7a9b53",
       "name": "Telegram: com foto",
@@ -182,7 +182,7 @@
             }
           ]
         },
-        "additionalFields": { "appendAttribution": false }
+        "additionalFields": { "appendAttribution": false, "parse_mode": "HTML" }
       },
       "id": "2c6e8a4b-5f7d-4a1c-9e3b-7d9f1b3c5e64",
       "name": "Telegram: só texto",
